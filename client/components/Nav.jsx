@@ -1,13 +1,15 @@
 import '../styles/nav.scss';
 import React from 'react';
 import Links from './Links.jsx';
+import { useSelector } from 'react-redux';
 
-const Nav = (props) => {
+const Nav = () => {
   console.log('here');
+  const loggedInStatus = useSelector((state) => state.loggedIn);
   return (
     <div id='nav-bar'>
       <h1>Kvasir</h1>
-      <Links loggedIn={props.loggedIn} />
+      <Links loggedIn={loggedInStatus} />
     </div>
   );
 };

@@ -1,8 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Nav from '../components/Nav.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { loggedIn } from '../rootReducer.js';
 
 const Login = () => {
   const [login, setLogin] = useState(true);
+
+  const dispatch = useDispatch;
   useEffect(() => {}, []);
   return (
     <div>
@@ -10,7 +14,7 @@ const Login = () => {
       {login ? (
         //if they want to login
         <div>
-          <input placeholder='username'></input>
+          <input placeholder='email'></input>
           <input placeholder='password'></input>
           <button onClick={() => console.log('submit!')}>Submit</button>
           <a onClick={() => setLogin(false)}>Don't have an account?</a>
@@ -18,10 +22,10 @@ const Login = () => {
       ) : (
         //if they want to sign up
         <div>
-          <input placeholder='username'></input>
+          <input placeholder='email'></input>
           <input placeholder='password'></input>
           <input placeholder='confirm password'></input>
-          <button onClick={() => console.log('submit!')}>Submit</button>
+          <button onClick={() => dispatch(loggedIn())}>Submit</button>
           <a onClick={() => setLogin(true)}>Already have an account?</a>
         </div>
       )}
