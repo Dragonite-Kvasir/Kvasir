@@ -1,9 +1,9 @@
 CREATE TABLE  public.users (
   "_id" serial NOT NULL,
   "email" varchar(60) NOT NULL UNIQUE,
-  "password" varchar(20) NOT NULL,
-  "display_name" varchar(30) NOT NULL,
-  "last_login" varchar NOT NULL,
+  "password" varchar NOT NULL,
+  "display_name" varchar(30),
+  "last_login" varchar,
   CONSTRAINT "users_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE  
