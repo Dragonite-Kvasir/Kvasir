@@ -1,6 +1,6 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 
-//ACTIONS - i've included an example, feel free to change
+// //ACTIONS - i've included an example, feel free to change
 const darkMode = createAction('darkMode');
 
 const initialState = {
@@ -20,8 +20,8 @@ const rootReducer = createReducer(
   // })
 );
 
-//export reducer
+// //export reducer
 export default rootReducer;
 
-//export actions
+// export actions
 export { darkMode };
