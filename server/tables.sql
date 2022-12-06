@@ -67,13 +67,13 @@ ALTER TABLE public.user_relationships ADD CONSTRAINT "user_fk0" FOREIGN KEY ("us
 ALTER TABLE public.user_relationships ADD CONSTRAINT "user_fk1" FOREIGN KEY ("user_id_rec") REFERENCES public.users("_id");
 
 ALTER TABLE public.user_interests ADD CONSTRAINT "user_fk0" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
-ALTER TABLE public.user_interests ADD CONSTRAINT "interests_fk0" FOREIGN KEY ("interests_id") REFERENCES public.interests("_id");
+ALTER TABLE public.user_interests ADD CONSTRAINT "interests_fk0" FOREIGN KEY ("interest_id") REFERENCES public.interests("_id");
 
 ALTER TABLE public.user_teach_languages ADD CONSTRAINT "user_fk0" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
 ALTER TABLE public.user_teach_languages ADD CONSTRAINT "languages_fk0" FOREIGN KEY ("language_id") REFERENCES public.languages("_id");
 
 ALTER TABLE public.user_learn_languages ADD CONSTRAINT "user_fk0" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
-ALTER TABLE public.user_learn_languages ADD CONSTRAINT "languages_fk0" FOREIGN KEY ("interests_id") REFERENCES public.languages("_id");
+ALTER TABLE public.user_learn_languages ADD CONSTRAINT "languages_fk0" FOREIGN KEY ("language_id") REFERENCES public.languages("_id");
 
 
 INSERT INTO public.languages VALUES (1, 'Spanish');
@@ -106,3 +106,4 @@ INSERT INTO public.interests VALUES (14, 'Stephens cats tail');
 INSERT INTO public.interests VALUES (15, 'Pokemon APIs');
 INSERT INTO public.interests VALUES (16, 'Photography');
 INSERT INTO public.interests VALUES (17, 'Saving Ethans Marriage');
+INSERT INTO public.interests VALUES (18, 'Ryans fishbowl shoes');
