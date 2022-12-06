@@ -1,17 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Nav from '../components/Nav.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { logIn } from '../rootReducer.js';
-import { Redirect } from 'react-router-dom';
+import { loginAction } from '../rootReducer.js';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [login, setLogin] = useState(true);
-  console.log(logIn);
   const dispatch = useDispatch();
   useEffect(() => {}, []);
-  function handleClick() {
-    dispatch(logIn());
-  }
+  const navigate = useNavigate();
   return (
     <div>
       {login ? (
@@ -19,7 +16,14 @@ const Login = () => {
         <div>
           <input placeholder='email'></input>
           <input placeholder='password'></input>
-          <button onClick={() => handleClick()}>Submit</button>
+          <button
+            onClick={() => {
+              dispatch(loginAction());
+              navigate('/');
+            }}
+          >
+            Submit
+          </button>
           <a onClick={() => setLogin(false)}>Don't have an account?</a>
         </div>
       ) : (
@@ -28,7 +32,14 @@ const Login = () => {
           <input placeholder='email'></input>
           <input placeholder='password'></input>
           <input placeholder='confirm password'></input>
-          <button onClick={() => handleClick()}>Submit</button>
+          <button
+            onClick={() => {
+              dispatch(loginAction());
+              navigate('/profile');
+            }}
+          >
+            Submit
+          </button>
           <a onClick={() => setLogin(true)}>Already have an account?</a>
         </div>
       )}
