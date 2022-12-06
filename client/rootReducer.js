@@ -2,8 +2,9 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 
 // //ACTIONS - i've included an example, feel free to change
 const updateFeed = createAction('updateFeed');
-const logIn = createAction('loggedIn');
+const loginAction = createAction('loginAction');
 const updateExplore = createAction('updateExplore');
+const updateChats = createAction('updateChats');
 
 const initialState = {
   userInfo: {
@@ -11,13 +12,15 @@ const initialState = {
     canTeach: ['English', 'Cantonese'],
     canLearn: ['Spanish', 'Russian'],
     imgUrl: '',
+    friends: [],
   },
+  currentChats: [],
   loggedIn: false,
   feedCurrent: 'Friends',
   exploreCurrent: {
     willTeach: '',
     willLearn: '',
-  }
+  },
 };
 
 const rootReducer = createReducer(initialState, (builder) =>
@@ -25,16 +28,19 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(updateFeed, (state, action) => {
       state.feedCurrent = action.payload;
     })
-    .addCase(logIn, (state) => {
+    .addCase(loginAction, (state) => {
       state.loggedIn ? (state.loggedIn = false) : (state.loggedIn = true);
     })
-      .addCase(updateExplore, (state, action) => {
-        state.exploreCurrent = action.payload;
-      })
+    .addCase(updateExplore, (state, action) => {
+      state.exploreCurrent = action.payload;
+    })
+    .addCase(updateChats, (state, action) => {
+      console.log('chatupdate');
+    })
 );
 
 // //export reducer
 export default rootReducer;
 
 // export actions
-export { updateFeed, loggedIn, updateExplore };
+export { updateFeed, loginAction, updateExplore };

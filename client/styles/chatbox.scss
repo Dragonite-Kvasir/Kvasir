@@ -1,0 +1,90 @@
+#chat-bar {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  bottom: 0px;
+  width: 100%;
+  height: 35%;
+  background-color: transparent;
+  align-items: flex-end;
+  //   align-items:
+  padding-bottom: 20px;
+
+  .chatbox-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+  .chat-img {
+    border-radius: 50%;
+    width: 50px;
+    height: auto;
+    bottom: 0px;
+  }
+  .chat-btn {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    padding: 5px;
+    background-color: aliceblue;
+    vertical-align: middle;
+    font-size: 20px;
+    margin: 10px;
+  }
+  .chatbox {
+    width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    .chatbox-chat {
+      position: absolute;
+      bottom: 0px;
+      height: 600px;
+      background-color: rgb(191, 212, 201);
+      width: 400px;
+    }
+    .input-div {
+      height: 50px;
+      bottom: 0px;
+      input {
+        width: 350px;
+        height: 20px;
+      }
+    }
+    .messages {
+      height: 500px;
+      overflow-y: scroll;
+    }
+  }
+}
+
+.chatbox-mini {
+  display: grid;
+  position: relative;
+  margin: 10px;
+  bottom: 0px;
+  .chat-btn-mini {
+    background-color: black;
+    display: flex;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    padding: 5px;
+    color: white;
+    vertical-align: middle;
+    font-size: 10px;
+    z-index: 1;
+    border-radius: 50%;
+    top: -5px;
+    right: -10px;
+  }
+}
