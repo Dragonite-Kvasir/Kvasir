@@ -1,0 +1,17 @@
+@import './variables.scss';
+
+body{ 
+  margin: 0;
+  padding: 0;
+  font-family: fantasy;
+}
+
+h1{
+  color: $brown;
+}
+
+a{
+  text-decoration: none;
+  color: $blue;
+  padding-left: 50px;
+}
