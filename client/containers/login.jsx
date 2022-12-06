@@ -1,22 +1,25 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Nav from '../components/Nav.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { loggedIn } from '../rootReducer.js';
+import { logIn } from '../rootReducer.js';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
   const [login, setLogin] = useState(true);
-
-  const dispatch = useDispatch;
+  console.log(logIn);
+  const dispatch = useDispatch();
   useEffect(() => {}, []);
+  function handleClick() {
+    dispatch(logIn());
+  }
   return (
     <div>
-      <Nav />
       {login ? (
         //if they want to login
         <div>
           <input placeholder='email'></input>
           <input placeholder='password'></input>
-          <button onClick={() => console.log('submit!')}>Submit</button>
+          <button onClick={() => handleClick()}>Submit</button>
           <a onClick={() => setLogin(false)}>Don't have an account?</a>
         </div>
       ) : (
@@ -25,7 +28,7 @@ const Login = () => {
           <input placeholder='email'></input>
           <input placeholder='password'></input>
           <input placeholder='confirm password'></input>
-          <button onClick={() => dispatch(loggedIn())}>Submit</button>
+          <button onClick={() => handleClick()}>Submit</button>
           <a onClick={() => setLogin(true)}>Already have an account?</a>
         </div>
       )}
