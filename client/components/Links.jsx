@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Links = (props) => {
   return (
-    <div className="nav-links">
-      { props.loggedIn ? 
-        <>
-          <a href="">Explore</a>
-          <a href="">Home Page</a>
-          <a href="">Profile</a>
-        </> :
-        <>
-          <a href="">Login</a>
-          <a href="">Sign Up</a>
-        </>
-      }
-
+    <div className='nav-links'>
+      {props.loggedIn ? (
+        <div>
+          <Link to='/explore'>Explore</Link>
+          <Link to='/'>Home Page</Link>
+          <Link to='/profile'>Profile</Link>
+        </div>
+      ) : (
+        <div>
+          <Link to='/login'>Login</Link>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default Links;

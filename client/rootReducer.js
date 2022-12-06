@@ -5,6 +5,7 @@ const darkMode = createAction('darkMode');
 
 const initialState = {
   userInfo: [],
+  loggedIn: true,
 };
 
 const rootReducer = createReducer(
