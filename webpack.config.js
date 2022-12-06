@@ -2,15 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = { 
+module.exports = {
   entry: './client/index.js',
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),
-      filename: 'index.html'
+      filename: 'index.html',
     }),
-    new MiniCssExtractPlugin()
-    
+    new MiniCssExtractPlugin(),
   ],
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -26,8 +25,8 @@ module.exports = {
       publicPath: '/',
     },
     proxy: {
-      '/': 'http://localhost:3000'
-    }
+      '/': 'http://localhost:3000',
+    },
   },
   module: {
     rules: [
@@ -37,27 +36,27 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"]
-          }
-        }
-      }, 
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
+      },
       {
         test: /\.(s(a|c)ss)$/,
         exclude: /node_modules/,
         use: [
-          MiniCssExtractPlugin.loader, 
+          MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader'
-          }, 
-          {
-            loader:'sass-loader'
+            loader: 'css-loader',
           },
-        ]
+          {
+            loader: 'sass-loader',
+          },
+        ],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        type: "asset",
+        type: 'asset',
       },
-    ]
+    ],
   },
-}
+};

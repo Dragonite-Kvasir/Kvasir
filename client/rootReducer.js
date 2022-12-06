@@ -7,20 +7,21 @@ const initialState = {
   userInfo: [],
 };
 
-const rootReducer = createReducer(initialState, (builder) =>
-  builder
-    .addCase(saveNamespace, (state, action) => {
-      state.currentNamespace = action.payload;
-    })
-    .addCase(darkMode, (state, action) => {
-      let dark;
-      action.payload ? (dark = false) : (dark = true);
-      state.dark = dark;
-    })
+const rootReducer = createReducer(
+  initialState,
+  (builder) => builder
+  // .addCase(saveNamespace, (state, action) => {
+  //   state.currentNamespace = action.payload;
+  // })
+  // .addCase(darkMode, (state, action) => {
+  //   let dark;
+  //   action.payload ? (dark = false) : (dark = true);
+  //   state.dark = dark;
+  // })
 );
 
 //export reducer
 export default rootReducer;
 
 //export actions
-export { darkMode, currentPage, addNamespaces, saveNamespace };
+export { darkMode };
