@@ -59,5 +59,5 @@ const rootReducer = createReducer(initialState, (builder) =>
 export default rootReducer;
 
 // export actions
-export { updateFeed, logInAction, updateExplore, updateInterests, updateCanTeach, updateCanLearn };
+export { updateFeed, loginAction, updateExplore, updateInterests, updateCanTeach, updateCanLearn };
 
