@@ -4,13 +4,17 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 const updateFeed = createAction('updateFeed');
 const logIn = createAction('loggedIn');
 const updateExplore = createAction('updateExplore');
+const updateInterests = createAction('updateInterests');
+const updateCanTeach = createAction('updateCanTeach');
+const updateCanLearn = createAction('updateCanLearn');
 
 const initialState = {
   userInfo: {
     displayName: 'hi',
-    canTeach: ['English', 'Cantonese'],
-    canLearn: ['Spanish', 'Russian'],
+    canTeach: ['Spanish', 'Russian'],
+    canLearn: ['Cantonese', 'English'],
     imgUrl: '',
+    interests: ['Saving Ethans Marriage', 'Running']
   },
   loggedIn: false,
   feedCurrent: 'Friends',
@@ -28,13 +32,22 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(logIn, (state) => {
       state.loggedIn ? (state.loggedIn = false) : (state.loggedIn = true);
     })
-      .addCase(updateExplore, (state, action) => {
-        state.exploreCurrent = action.payload;
-      })
+    .addCase(updateExplore, (state, action) => {
+      state.exploreCurrent = action.payload;
+    })
+    .addCase(updateInterests, (state, action) => {
+      state.userInfo.interests = action.payload;
+    })
+    .addCase(updateCanTeach, (state, action) => {
+      state.userInfo.canTeach = action.payload;
+    })
+    .addCase(updateCanLearn, (state, action) => {
+      state.userInfo.canLearn = action.payload;
+    })
 );
 
 // //export reducer
 export default rootReducer;
 
 // export actions
-export { updateFeed, loggedIn, updateExplore };
+export { updateFeed, logIn, updateExplore, updateInterests, updateCanTeach, updateCanLearn };
