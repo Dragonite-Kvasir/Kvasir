@@ -13,7 +13,6 @@ const Feed = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <Nav />
       <DropDown
         options={dropDownopt}
         current={currentDrop}

@@ -5,10 +5,12 @@ import Feed from '../containers/feed.jsx';
 import Profile from '../containers/profile.jsx';
 import Login from '../containers/login.jsx';
 import Explore from '../containers/explore.jsx';
+import '../styles/global.scss';
 
 const App = () => {
   return (
     <div>
+      <Nav loggedIn={true}/>
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/explore' element={<Explore />} />

@@ -1,24 +1,25 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 
 // //ACTIONS - i've included an example, feel free to change
-const darkMode = createAction('darkMode');
 const updateFeed = createAction('updateFeed');
+const loggedIn = createAction('loggedIn');
 
 const initialState = {
   userInfo: [],
-  loggedIn: true,
+  loggedIn: false,
   feedCurrent: 'Friends',
 };
 
 const rootReducer = createReducer(
   initialState,
   (builder) =>
-    builder.addCase(updateFeed, (state, action) => {
-      state.feedCurrent = action.payload;
-    })
-  // .addCase(saveNamespace, (state, action) => {
-  //   state.currentNamespace = action.payload;
-  // })
+    builder
+      .addCase(updateFeed, (state, action) => {
+        state.feedCurrent = action.payload;
+      })
+      .addCase(loggedIn, (state) => {
+        loggedIn ? (state.loggedIn = true) : (state.loggedIn = false);
+      })
   // .addCase(darkMode, (state, action) => {
   //   let dark;
   //   action.payload ? (dark = false) : (dark = true);
@@ -30,4 +31,4 @@ const rootReducer = createReducer(
 export default rootReducer;
 
 // export actions
-export { updateFeed, darkMode };
+export { updateFeed, loggedIn };
