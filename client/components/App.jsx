@@ -1,8 +1,9 @@
 import React from 'react';
+import Nav from './Nav.jsx';
 
 const App = () => {
   return (
-    <h1>Hello from Kvasir</h1>
+    <Nav />
   )
 }
 
