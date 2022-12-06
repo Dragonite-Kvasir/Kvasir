@@ -9,7 +9,7 @@ const Nav = () => {
   return (
     <div id='nav-bar'>
       <h1>Kvasir</h1>
-      <Links loggedIn={loggedInStatus} />
+      <Links loggedIn={true} />
     </div>
   );
 };
