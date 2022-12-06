@@ -4,15 +4,19 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 const updateFeed = createAction('updateFeed');
 const loginAction = createAction('loginAction');
 const updateExplore = createAction('updateExplore');
+const updateInterests = createAction('updateInterests');
+const updateCanTeach = createAction('updateCanTeach');
+const updateCanLearn = createAction('updateCanLearn');
 const updateChats = createAction('updateChats');
 
 const initialState = {
   userInfo: {
     displayName: 'hi',
-    canTeach: ['English', 'Cantonese'],
-    canLearn: ['Spanish', 'Russian'],
+    canTeach: ['Spanish', 'Russian'],
+    canLearn: ['Cantonese', 'English'],
     imgUrl: '',
     friends: [],
+    interests: ['Saving Ethans Marriage', 'Running']
   },
   currentChats: [],
   loggedIn: false,
@@ -34,6 +38,18 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(updateExplore, (state, action) => {
       state.exploreCurrent = action.payload;
     })
+    .addCase(updateInterests, (state, action) => {
+      state.userInfo.interests = action.payload;
+    })
+    .addCase(updateCanTeach, (state, action) => {
+      state.userInfo.canTeach = action.payload;
+    })
+    .addCase(updateCanLearn, (state, action) => {
+      state.userInfo.canLearn = action.payload;
+    })
+    .addCase(updateExplore, (state, action) => {
+      state.exploreCurrent = action.payload;
+    })
     .addCase(updateChats, (state, action) => {
       console.log('chatupdate');
     })
@@ -43,4 +59,5 @@ const rootReducer = createReducer(initialState, (builder) =>
 export default rootReducer;
 
 // export actions
-export { updateFeed, loginAction, updateExplore };
+export { updateFeed, loginAction, updateExplore, updateInterests, updateCanTeach, updateCanLearn };
+

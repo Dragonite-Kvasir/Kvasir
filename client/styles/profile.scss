@@ -1,0 +1,53 @@
+@import './variables.scss';
+
+
+button {
+  font-size: 15px;
+  left: 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid $blue;
+  padding: 5px 15px;
+  background-color: $white;
+  color: $blue;
+}
+
+.profile-selections{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.pb {
+  display: flex;
+  position: relative;
+  margin: 5px;
+}
+
+.remove-link {
+  position: absolute;
+  padding-left: 0;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: $white;
+  border-radius: 50%;
+  width: 15px;
+  line-height: 15px;
+  height: auto;
+  text-align: center;
+  z-index: 1;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.edit-button {
+  border-color: $brown;
+  color: $brown;
+}
+
