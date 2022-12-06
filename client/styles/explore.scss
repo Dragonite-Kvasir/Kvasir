@@ -1,0 +1,14 @@
+.card-holder{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#explore-page{
+  display: flex;
+  flex-direction: row;
+}
+
+#explore-aside{
+  width: 230px;
+}
