@@ -10,7 +10,7 @@ import '../styles/global.scss';
 const App = () => {
   return (
     <div>
-      <Nav loggedIn={true}/>
+      <Nav loggedIn={false}/>
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/explore' element={<Explore />} />
