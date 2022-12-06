@@ -9,6 +9,7 @@ const Links = (props) => {
           <Link to='/explore'>Explore</Link>
           <Link to='/'>Home Page</Link>
           <Link to='/profile'>Profile</Link>
+          <Link to='/login'>Log Out</Link>
         </div>
       ) : (
         <div>

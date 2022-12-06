@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, '../build')));
   app.get('/', (req, res) => {
     return res
-      .status(200)
+      .sendStatus(200)
       .sendFile(path.join(__dirname, '../build/index/html'));
   });
 }
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
  * Handle faulty requests
  */
 app.use('/', (req, res) => {
-  return res.send(404);
+  return res.sendStatus(404);
 });
 
 /**
@@ -46,7 +46,7 @@ app.use((err, req, res, next) => {
   };
   const errorObj = Object.assign({}, defaultErr, err);
   console.log(errorObj.log);
-  return res.status(errorObj.status).json(errorObj.message);
+  return res.sendStatus(errorObj.status).json(errorObj.message);
 });
 
 /**
