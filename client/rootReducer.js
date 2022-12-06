@@ -2,7 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 
 // //ACTIONS - i've included an example, feel free to change
 const updateFeed = createAction('updateFeed');
-const logIn = createAction('loggedIn');
+const loginAction = createAction('loggedIn');
 
 const initialState = {
   userInfo: [],
@@ -15,7 +15,7 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(updateFeed, (state, action) => {
       state.feedCurrent = action.payload;
     })
-    .addCase(logIn, (state) => {
+    .addCase(loginAction, (state) => {
       state.loggedIn ? (state.loggedIn = false) : (state.loggedIn = true);
     })
 );
@@ -24,4 +24,4 @@ const rootReducer = createReducer(initialState, (builder) =>
 export default rootReducer;
 
 // export actions
-export { updateFeed, logIn };
+export { updateFeed, loginAction };

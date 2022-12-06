@@ -10,18 +10,24 @@ const Feed = () => {
   const dropDownopt = ['Friends', 'Pending', 'Requests'];
   const currentDrop = useSelector((state) => state.feedCurrent);
   const [dropCurrent, setDropCurrent] = useState(currentDrop);
+  const loggedInStatus = useSelector((state) => state.loggedIn);
   const dispatch = useDispatch();
   return (
     <div>
-      <DropDown
-        options={dropDownopt}
-        current={currentDrop}
-        handleChange={(name) => {
-          dispatch(updateFeed(name));
-          console.log('change');
-        }}
-      />
-      <div id='card-container'></div>
+      {loggedInStatus ? (
+        <div>
+          <DropDown
+            options={dropDownopt}
+            current={dropCurrent}
+            handleChange={(name) => {
+              dispatch(updateFeed(name));
+            }}
+          />
+          <div id='card-container'></div>
+        </div>
+      ) : (
+        <div>YOU NEED TO LOG IN OK</div>
+      )}
     </div>
   );
 };
