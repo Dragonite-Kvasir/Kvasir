@@ -2,7 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 
 // //ACTIONS - i've included an example, feel free to change
 const updateFeed = createAction('updateFeed');
-const loggedIn = createAction('loggedIn');
+const logIn = createAction('loggedIn');
 const updateExplore = createAction('updateExplore');
 
 const initialState = {
@@ -20,24 +20,17 @@ const initialState = {
   }
 };
 
-const rootReducer = createReducer(
-  initialState,
-  (builder) =>
-    builder
-      .addCase(updateFeed, (state, action) => {
-        state.feedCurrent = action.payload;
-      })
-      .addCase(loggedIn, (state) => {
-        loggedIn ? (state.loggedIn = true) : (state.loggedIn = false);
-      })
+const rootReducer = createReducer(initialState, (builder) =>
+  builder
+    .addCase(updateFeed, (state, action) => {
+      state.feedCurrent = action.payload;
+    })
+    .addCase(logIn, (state) => {
+      state.loggedIn ? (state.loggedIn = false) : (state.loggedIn = true);
+    })
       .addCase(updateExplore, (state, action) => {
         state.exploreCurrent = action.payload;
       })
-  // .addCase(darkMode, (state, action) => {
-  //   let dark;
-  //   action.payload ? (dark = false) : (dark = true);
-  //   state.dark = dark;
-  // })
 );
 
 // //export reducer
