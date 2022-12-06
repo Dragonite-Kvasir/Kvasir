@@ -1,7 +1,12 @@
 const React = require('react');
+import Nav from '../components/Nav.jsx';
 
 const Profile = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Nav />
+    </div>
+  );
 };
 
 export default Profile;
