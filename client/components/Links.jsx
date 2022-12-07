@@ -10,16 +10,30 @@ const Links = ({ loggedIn } = props) => {
     <div id='links-container'>
       {loggedIn ? (
         <div id='all-links'>
-          <Link to='/explore' className='nav-links'>Explore</Link>
-          <Link to='/' className='nav-links'>Feed</Link>
-          <Link to='/profile' className='nav-links'>Profile</Link>
-          <Link to='/login' onClick={() => dispatch(loginAction())} className='nav-links'>
+          <Link to='/explore' className='nav-links'>
+            Explore
+          </Link>
+          <Link to='/' className='nav-links'>
+            Feed
+          </Link>
+          <Link to='/profile' className='nav-links'>
+            Profile
+          </Link>
+          <Link to='/login' className='nav-links'>
             Log Out
           </Link>
         </div>
       ) : (
         <div id='login-container'>
-          <Link to='/login' className='nav-links'>Login</Link>
+          <Link
+            to='/login'
+            className='nav-links'
+            onClick={() => {
+              dispatch(loginAction(false));
+            }}
+          >
+            Login
+          </Link>
         </div>
       )}
     </div>

@@ -9,7 +9,7 @@ const ProfileSection = ({edit, handleAdd, handleRemove, options, current, info, 
       <p className="unbold-title">{name}</p>
       <div className="profile-selections">
         {info.map((e, i) => {
-            return <ProfileWidget edit={edit} handleRemove={handleRemove} type={type} name={e} i={i}/>
+            return <ProfileWidget key={`pw_${i}`} edit={edit} handleRemove={handleRemove} type={type} name={e} i={i}/>
         })}
       </div>
         {edit?<DropDown type={type} handleChange={handleAdd} options={options} current={current} fromProfile={true}/> :<></>}

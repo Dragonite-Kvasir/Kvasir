@@ -12,11 +12,11 @@ const App = () => {
   const userInfo = useSelector((state) => state.userInfo);
   return (
     <div id='full-page-layout'>
-      <Nav loggedIn={false}/>
+      <Nav />
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/explore' element={<Explore />} />
-        <Route path='/profile' element={<Profile userInfo={userInfo}/>} />
+        <Route path='/profile' element={<Profile userInfo={userInfo} />} />
         <Route path='/' element={<Feed />} />
       </Routes>
     </div>
