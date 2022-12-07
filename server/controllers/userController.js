@@ -139,7 +139,6 @@ userController.updateInterest = async (req, res, next) => {
     const adding = `INSERT INTO user_interests(user_id, interest_id) VALUES` + rows.map(e => `(${res.locals.userId._id},${e._id})`).join(',');
     const added = await db.query(adding);
     console.log(added);
-  
     return next();
   }
   catch(err) {

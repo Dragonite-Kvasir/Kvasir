@@ -2,13 +2,15 @@
 
 #navbar {
   display: grid;
-  grid-template-columns: 30% auto minmax(30%, 350px);
-  
+  height: 7vh;
+  grid-template-columns: 20% auto minmax(30%, 350px);
   background-color: darken($white, 5);
 }
 
 #left-nav {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #nav-title {
