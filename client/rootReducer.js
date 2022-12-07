@@ -10,6 +10,7 @@ const updateChats = createAction('updateChats');
 const addFriends = createAction('addCards');
 const updateFriend = createAction('updateFriend');
 
+
 const initialState = {
   userInfo: {
     id: 0,

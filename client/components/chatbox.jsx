@@ -1,7 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import db from '../firebase';
+import ChatMessage from './ChatMessage.jsx';
+import SendMessage from './SendMessage.jsx';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-const ChatBox = ({ img, name }) => {
+
+const ChatBox = (props) => {
   const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  //name represents the friend you are chatting with (from chatBar)
+  const { img, name, user } = props;
+  //the sort method here ensures that messages between a name/user pair always ends up in the same collection
+  const collectionName = [name, user].sort();
+  // const collectionName = 'messages';
+
+  useEffect(() => {
+    console.log('hi');
+    db.collection(`${collectionName}`)
+      .orderBy('createdAt')
+      .limit(8)
+      .onSnapshot((snapshot) => {
+        setMessages(snapshot.docs.map((doc) => doc.data()));
+      });
+  }, []);
+
+
   return open ? (
     <div className='chatbox'>
       <div className='chatbox-chat'>
@@ -18,11 +42,13 @@ const ChatBox = ({ img, name }) => {
           </a>
         </div>
         <div className='messages'>
-          <p>hi</p>
+          <ChatMessage 
+            user={user}
+            name={name}
+            messages={messages}
+          />
         </div>
-        <div className='input-div'>
-          <input placeholder='Type here'></input>
-        </div>
+          <SendMessage collectionName={collectionName} user={user} name={name}/>
       </div>
     </div>
   ) : (
