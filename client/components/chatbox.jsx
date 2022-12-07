@@ -47,8 +47,9 @@ const ChatBox = (props) => {
             name={name}
             messages={messages}
           />
-        </div>
           <SendMessage collectionName={collectionName} user={user} name={name}/>
+        </div>
+          
       </div>
     </div>
   ) : (
