@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Nav from './Nav.jsx';
 import { Routes, Route } from 'react-router-dom';
 import Feed from '../containers/feed.jsx';
@@ -8,13 +9,14 @@ import Explore from '../containers/explore.jsx';
 import '../styles/global.scss';
 
 const App = () => {
+  const userInfo = useSelector((state) => state.userInfo);
   return (
     <div>
-      <Nav loggedIn={false}/>
+      <Nav/>
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/explore' element={<Explore />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/profile' element={<Profile userInfo={userInfo}/>} />
         <Route path='/' element={<Feed />} />
       </Routes>
     </div>
