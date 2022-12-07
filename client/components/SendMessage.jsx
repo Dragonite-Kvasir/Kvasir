@@ -10,11 +10,13 @@ const SendMessage = (props) => {
   const send = async (e) => {
     e.preventDefault();
     setBlank('');
-    const user = props.user;
-
-    await db.collection(`${props.collectionName}`).add({
+    const { user, name, collectionName } = props;
+    
+    console.log(collectionName);
+    await db.collection(`${collectionName}`).add({
       text: `${user}: ${message}`,
       id: user,
+      friend: name,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     setMessage('');
@@ -22,7 +24,7 @@ const SendMessage = (props) => {
 
   return (
     <div>
-      <form classname='input-dev' onSubmit={send}>
+      <form className='input-dev' onSubmit={send}>
         <input
           className='msg-input'
           value={blank}

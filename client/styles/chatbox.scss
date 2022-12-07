@@ -66,6 +66,24 @@
   }
 }
 
+.single-message-user {
+  background-color: $lightmauve;
+  font-family: $body-font;
+  border-radius: 10px;
+  align-self: flex-end;
+  width: 70%;
+
+}
+
+.single-message-friend {
+  background-color: darken($white, 5);
+  font-family: $body-font;
+  border-radius: 10px;
+  align-self: flex-start;
+  width: 70%;
+
+}
+
 .chatbox-mini {
   display: grid;
   position: relative;
