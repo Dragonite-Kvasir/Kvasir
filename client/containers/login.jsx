@@ -29,21 +29,20 @@ const Login = () => {
           email: email,
           password: password,
         });
-        console.log(response.data);
         if (response.status === 200) {
-          console.log('HERE');
           const userData = response;
-          console.log(userData.data);
           dispatch(
             loginAction({
               loggedIn: userData.accessToken,
             })
           );
-          dispatch(
-            updateUserInfo({
-              ...userData.data.userInfo,
-            })
-          );
+          if (type === 'login') {
+            dispatch(
+              updateUserInfo({
+                ...userData.data.userInfo,
+              })
+            );
+          }
           navigate(route);
         }
       } catch (err) {
@@ -69,7 +68,7 @@ const Login = () => {
             <button
               onClick={() => {
                 // dispatch(loginAction());
-                loginHandle('/user/login');
+                loginHandle('/user/login', 'login');
               }}
               id='submit-button'
               className='click'
@@ -103,8 +102,7 @@ const Login = () => {
             ></input>
             <button
               onClick={() => {
-                // dispatch(loginAction());
-                loginHandle('/user/signup');
+                loginHandle('/user/signup', 'signup');
                 navigate('/profile');
               }}
               id='submit-button'
