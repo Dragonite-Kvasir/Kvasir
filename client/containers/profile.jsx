@@ -1,67 +1,88 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import '../styles/profile.scss';
-import DropDown from '../components/Dropdown.jsx';
-
+import { updateUserInfo } from '../rootReducer';
+import ProfileSection from '../components/ProfileSection.jsx';
 const options = ['bye', 'happy', 'sad'];
 const current = 'hi';
 
-const Profile = () => {
-  const learnOptions = useSelector((state) => state.userInfo.canLearn);
-  const teachOptions = useSelector((state) => state.userInfo.canTeach);
-  const interestOptions = useSelector((state) => state.userInfo.interests);
-  const displayName = useSelector((state) => state.userInfo.displayName);
+
+const Profile = ( {userInfo} ) => {
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [newDisplayName, setNewDisplayName] = useState('');
   const [edit, setEdit] = useState(false);
-
-  console.log(learnOptions, teachOptions);
+  const [add, setAdd] = useState({
+    canTeach: [],
+    canLearn: [],
+    interests: []
+  });
+  const dispatch = useDispatch();
 
   const handleRemove = (e) => {
-    // delete fetch to remove user interests
-    // then delete the element with the corresponding id from the page
     const type = Array.from(e.target.classList)[0];
-    const node = document.getElementById(`${type}_${e.target.id}`);
-    node.remove();
+    const newAdd = {
+      ...add
+    }
+    const i = newAdd[type].indexOf(e.target.id);
+    newAdd[type] = newAdd[type].slice(0,i).concat(newAdd[type].slice(i+1, newAdd[type].length));
+    setAdd({
+      ...newAdd
+    })
   }
 
-  const handleAdd = (e) => {
-    console.log(e);
-    // patch fetch to add user_interest
-    // then add the new interest to the page
+
+  const handleAdd = (e, name, type) => {
+    console.log(type);
+    if(!add[type].includes(name)){
+      const newAdd = {
+        ...add
+      }
+      newAdd[type].push(name);
+      setAdd({
+        ...newAdd
+      })
+    }
+  }
   
+  const handleSave = () => {
+    dispatch(updateUserInfo({
+      ...userInfo,
+      interests: add.interests,
+      canTeach: add.canTeach,
+      canLearn: add.canLearn
+    }));
+    setEdit(false);
   }
 
-  const generateButton = (type, name, i) => {
-    console.log(type, name, i);
-    return ( 
-      <div id={`${type}_${name}`} className="pb" key={`${type[0]}_${i}`}>
-        <button className="profile-button">{name}</button>
-        <a id={`${name}`} className={`${type} remove-link edit hidden`} onClick={handleRemove}>x</a>
-      </div>
-    )
+  const handleCancel = () => {
+    setEdit(false);
+    Array.from(document.querySelector('div.deleteMe')).forEach(e => e.remove());
   }
-
-  const learning = learnOptions.map((e, i) => {
-    return generateButton('learn', e, i);
-  });
-
-  const teaching = teachOptions.map((e, i) => {
-    return generateButton('teach', e, i);
-  });
-  
-  const interests = interestOptions.map((e, i) => {
-    return generateButton('interests', e, i);
-  })
-
-
 
   useEffect(() => {
-    const links = Array.from(document.querySelectorAll('.edit'));
+    setAdd({
+      interests: [],
+      canTeach: [],
+      canLearn: []
+    })
+  }, [userInfo])
+
+  useEffect(() => {
     if(edit){
-      links.forEach((e) => e.classList.remove('hidden'));
-    } else {
-      links.forEach((e) => e.classList.add('hidden'));
+      setAdd({
+        interests: [
+          ...userInfo.interests
+        ],
+        canTeach: [
+          ...userInfo.canTeach
+        ],
+        canLearn: [
+          ...userInfo.canLearn
+        ]
+      })
     }
     // load remaining languages into the dropdowns
     // if user selects a language they already have, ignore them
@@ -70,54 +91,31 @@ const Profile = () => {
 
   return ( 
     <div id="profile-page">
-      <button onClick={(e) => setEdit(!edit)} className="edit-button">Edit</button>
-      <section className="profile-section">
-        <p className="profile-title">I am teaching:</p>
-        <div className="profile-selections">
-          {teaching}
-        </div>
-        <div className="edit hidden">
-          <DropDown handleChange={handleAdd} options={options} current={current}/>
-        </div>
-      </section>
-      <section className="profile-section">
-        <p className="profile-title">I am learning:</p>
-        <div className="profile-selections">
-          {learning}
-        </div>
-        <div className="edit hidden">
-          <DropDown handleChange={handleAdd} options={options} current={current}/>
-        </div>
-      </section>
-      <section className="profile-section">
-        <p className="profile-title">My interests are:</p>
-        <div className="profile-selections">
-          {interests}
-        </div>
-        <div className="edit hidden">
-          <DropDown handleChange={handleAdd} options={options} current={current}/>
-        </div>
-      </section>
+      {!edit ? <button onClick={()=>setEdit(!edit)} className="edit-button">Edit</button> : <></>}
+      {edit ? <button onClick={handleSave}>Save</button> : <></>}
+      {edit ? <button onClick={handleCancel}>Cancel</button> : <></>}
+      <ProfileSection edit={edit} id="section_canLearn" handleAdd={handleAdd} options={options} current={current} name="I want to learn: " info={edit?add.canLearn:userInfo.canLearn} type='canLearn' handleRemove={handleRemove}/>
+      <ProfileSection edit={edit} id="section_canTeach" handleAdd={handleAdd} options={options} current={current} name="I can teach: " info={edit?add.canTeach:userInfo.canTeach} type='canTeach' handleRemove={handleRemove}/>
+      <ProfileSection edit={edit} id="section_interests" handleAdd={handleAdd} options={options} current={current} info={edit?add.interests:userInfo.interests} type='interests' name="I am interested in: " handleRemove={handleRemove}/>
       <section className="profile-section">
         <p className="profile-title">Basic Info:</p>
         <div className="profile-selections">
-          <p>Display Name: {displayName}</p>
+          <p>Display Name: {userInfo.displayName}</p>
         </div>
-        
         <div className="edit hidden">
           <label htmlFor="displayName">Change Display Name:</label>
           <input name="displayName" type="text" value={newDisplayName} onChange={e => setNewDisplayName(e.target.value)}/>
           <button type="submit" onClick={e => console.log(newDisplayName)}>Submit</button>
         </div>
-        <div className="edit hidden">
+        <div>
           <label>Change Your Password:</label>
           <label htmlFor="password">Current Password:</label>
-          <input name="password" type="text" />
+          <input name="password" type="text" onChange={(e) => setPassword(e.target.value)}value={password}/>
           <label htmlFor="newPassword">New Password:</label>
-          <input name="newPassword" type="text" />
+          <input name="newPassword" type="text" onChange={(e) => setNewPassword(e.target.value)}value={newPassword}/>
           <label htmlFor="confirm">Confirm New Password:</label>
-          <input name="confirm" type="text" />
-          <button className="edit hidden">Submit</button>
+          <input name="confirm" type="text" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}/>
+          <button>Submit</button>
         </div>
       </section>
     </div>

@@ -4,9 +4,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 const updateFeed = createAction('updateFeed');
 const loginAction = createAction('loginAction');
 const updateExplore = createAction('updateExplore');
-const updateInterests = createAction('updateInterests');
-const updateCanTeach = createAction('updateCanTeach');
-const updateCanLearn = createAction('updateCanLearn');
+const updateUserInfo = createAction('updateUserInfo');
 const updateChats = createAction('updateChats');
 
 const initialState = {
@@ -16,10 +14,10 @@ const initialState = {
     canLearn: ['Cantonese', 'English'],
     imgUrl: '',
     friends: [],
-    interests: ['Saving Ethans Marriage', 'Running']
+    interests: ['Saving Ethans Marriage', 'Running'],
   },
   currentChats: [],
-  loggedIn: false,
+  loggedIn: true,
   feedCurrent: 'Friends',
   exploreCurrent: {
     willTeach: '',
@@ -57,5 +55,14 @@ const rootReducer = createReducer(initialState, (builder) =>
 export default rootReducer;
 
 // export actions
-export { updateFeed, loginAction, updateExplore, updateInterests, updateCanTeach, updateCanLearn };
+export {
+  updateFeed,
+  loginAction,
+  updateExplore,
+  updateInterests,
+  updateCanTeach,
+  updateCanLearn,
+  updateUserInfo
+};
+
 

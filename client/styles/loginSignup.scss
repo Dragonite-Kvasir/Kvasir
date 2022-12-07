@@ -1,0 +1,35 @@
+@import './variables.scss';
+
+#login-layout {
+    height: 93vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.click {
+    cursor: pointer;
+    font-family: $body-font;
+}
+
+#login-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    height: 50%;
+}
+
+.login-title {
+    font-family: $title-font;
+    color: $brown;
+}
+
+.input-box {
+    margin: 6px;
+    border: 1px solid $blue;
+    border-radius: 14px;
+    height: 2rem;
+    padding: 0 10px;
+}

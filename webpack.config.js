@@ -17,15 +17,22 @@ module.exports = {
   },
   mode: process.env.NODE_ENV,
   devServer: {
+    historyApiFallback: true,
     hot: true,
-    host: 'localhost',
     port: 8080,
     static: {
       directory: path.resolve(__dirname, 'build'),
       publicPath: '/',
     },
     proxy: {
-      '/': 'http://localhost:3000',
+      '/': {
+        target: 'http://localhost:8080/',
+        router: () => 'http://localhost:3000',
+      },
+      '/user': {
+        target: 'http://localhost:8080',
+        router: () => 'http://localhost:3000',
+      },
     },
   },
   module: {

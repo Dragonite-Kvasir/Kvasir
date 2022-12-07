@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef  } from 'react';
 
-const DropDown = ({ options, current, handleChange }) => {
+const DropDown = ({ options, current, handleChange, type, fromProfile }) => {
   //react hook to open/close the dropdown
   const [open, setOpen] = useState(false);
 
@@ -15,9 +15,10 @@ const DropDown = ({ options, current, handleChange }) => {
       <li key={`li` + name} className='menu-item'>
         <button
           key={'li-but' + name}
-          onClick={() => {
+          onClick={(e) => {
             handleMenu(name);
-            handleChange(name);
+            if(!fromProfile) handleChange(name);
+            else handleChange(e, name, type);
           }}
         >
           {name}
