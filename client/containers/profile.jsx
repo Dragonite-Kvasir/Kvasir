@@ -7,10 +7,13 @@ import ChatBar from './chatbar.jsx';
 import { updateUserInfo } from '../rootReducer';
 import ProfileSection from '../components/ProfileSection.jsx';
 import axios from 'axios';
+import LoadingSpinner from '../components/Spinner.jsx';
 
 const current = 'Select to Add';
 
-const Profile = ({ userInfo }) => {
+
+const Profile = ( {userInfo} ) => {
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -53,7 +56,8 @@ const Profile = ({ userInfo }) => {
   };
 
   const handleSave = async () => {
-    try {
+    setLoading(true);
+    try{
       const r1 = await axios.patch(`/user/update/interest`, {
         interests: add.interests,
         email: userInfo.email,
@@ -78,7 +82,8 @@ const Profile = ({ userInfo }) => {
       alert('something went wrong');
     }
     setEdit(false);
-  };
+    setLoading(false);
+  }
 
   const handleCancel = () => {
     setEdit(false);
@@ -179,104 +184,103 @@ const Profile = ({ userInfo }) => {
     // if user selects a language they already have, ignore them
   }, [edit]);
 
-  return (
-    <div id='profile-page'>
-      <ProfileSection
-        edit={edit}
-        id='section_canLearn'
-        handleAdd={handleAdd}
-        options={languages}
-        current={current}
-        name='I want to learn: '
-        info={edit ? add.canLearn : userInfo.canLearn}
-        type='canLearn'
-        handleRemove={handleRemove}
-      />
 
-      <ProfileSection
-        edit={edit}
-        id='section_canTeach'
-        handleAdd={handleAdd}
-        options={languages}
-        current={current}
-        name='I can teach: '
-        info={edit ? add.canTeach : userInfo.canTeach}
-        type='canTeach'
-        handleRemove={handleRemove}
-      />
-
-      <ProfileSection
-        edit={edit}
-        id='section_interests'
-        handleAdd={handleAdd}
-        options={interests}
-        current={current}
-        info={edit ? add.interests : userInfo.interests}
-        type='interests'
-        name='I am interested in: '
-        handleRemove={handleRemove}
-      />
-
-      <section className='profile-section'>
-        <p className='profile-title'>Basic Info:</p>
-        <div className='profile-selections'>
-          <p>Display Name: {userInfo.displayName}</p>
+  return ( 
+    <div id="profile-page">
+      {loading ? <LoadingSpinner /> : <></>}
+      <div >
+          <p className="profile-title">Display Name: {userInfo.displayName}</p>
         </div>
-        <div>
-          <label htmlFor='displayName'>Change Display Name:</label>
-          <input
-            name='displayName'
-            type='text'
-            value={newDisplayName}
-            onChange={(e) => setNewDisplayName(e.target.value)}
+      <ProfileSection 
+        edit={edit} 
+        id="section_canLearn" 
+        handleAdd={handleAdd} 
+        options={languages} 
+        current={current} 
+        name="I want to learn: " 
+        info={edit?add.canLearn:userInfo.canLearn} 
+        type='canLearn' 
+        handleRemove={handleRemove}
+      />
+
+      <ProfileSection 
+        edit={edit} 
+        id="section_canTeach" 
+        handleAdd={handleAdd} 
+        options={languages} 
+        current={current} 
+        name="I can teach: " 
+        info={edit?add.canTeach:userInfo.canTeach} 
+        type='canTeach' 
+        handleRemove={handleRemove}
+      />
+
+      <ProfileSection 
+        edit={edit} 
+        id="section_interests" 
+        handleAdd={handleAdd} 
+        options={interests} 
+        current={current} 
+        info={edit?add.interests:userInfo.interests} 
+        type='interests' name="I am interested in: " 
+        handleRemove={handleRemove}
+      />
+      {!edit ? <button className='profile-btn' onClick={()=>setEdit(!edit)} id="edit-button">Edit</button> : <></>}
+
+      {edit ? <button className='profile-btn' onClick={handleSave}>Save</button> : <></>}
+
+      {edit ? <button className='profile-btn' onClick={handleCancel}>Cancel</button> : <></>}
+      <section className="profile-section">
+        
+        <div id='change-display-name'>
+          <label className="profile-title" htmlFor="displayName">Change Display Name:</label>
+          <input 
+            name="displayName"
+            className='input-box'
+            placeholder='Enter new display name' 
+            type="text" 
+            value={newDisplayName} 
+            onChange={e => setNewDisplayName(e.target.value)}
           />
-          <button type='submit' onClick={handleDisplayName}>
-            Submit
-          </button>
+          <button id="edit-button" className='profile-btn' type="submit" onClick={handleDisplayName}>Submit</button>
         </div>
         <div id='pass-change-box'>
-          <label>Change Your Password:</label>
+          <label className="profile-title">Change Your Password:</label>
           <section className='password-inputs'>
-            <label htmlFor='password'>Current Password:</label>
-            <input
-              name='password'
-              type='text'
+            <label className="pass-title" htmlFor="password">Current Password:</label>
+            <input 
+              name="password" 
+              className='input-box' 
+              type="text" 
+              placeholder='Enter current password' 
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
           </section>
           <section className='password-inputs'>
-            <label htmlFor='newPassword'>New Password:</label>
-            <input
-              name='newPassword'
-              type='text'
-              onChange={(e) => setNewPassword(e.target.value)}
+            <label className="pass-title" htmlFor="newPassword">New Password:</label>
+            <input 
+              name="newPassword" 
+              className='input-box' 
+              placeholder='Enter new password' 
+              type="text" onChange={(e) => setNewPassword(e.target.value)}
               value={newPassword}
             />
           </section>
           <section className='password-inputs'>
-            <label htmlFor='confirm'>Confirm New Password:</label>
-            <input
-              name='confirm'
-              type='text'
-              onChange={(e) => setConfirmPassword(e.target.value)}
+            <label className="pass-title" htmlFor="confirm">Confirm New Password:</label>
+            <input 
+              name="confirm" 
+              className='input-box' 
+              type="text" 
+              placeholder='Re-enter new password' 
+              onChange={(e) => setConfirmPassword(e.target.value)} 
               value={confirmPassword}
             />
           </section>
-          <button>Submit</button>
+          <button id="edit-button" className='profile-btn'>Submit</button>
         </div>
       </section>
-      {!edit ? (
-        <button onClick={() => setEdit(!edit)} className='edit-button'>
-          Edit
-        </button>
-      ) : (
-        <></>
-      )}
-
-      {edit ? <button onClick={handleSave}>Save</button> : <></>}
-
-      {edit ? <button onClick={handleCancel}>Cancel</button> : <></>}
     </div>
   );
 };
