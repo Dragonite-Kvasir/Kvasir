@@ -11,8 +11,8 @@ import '../styles/global.scss';
 const App = () => {
   const userInfo = useSelector((state) => state.userInfo);
   return (
-    <div>
-      <Nav/>
+    <div id='full-page-layout'>
+      <Nav loggedIn={false}/>
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/explore' element={<Explore />} />
