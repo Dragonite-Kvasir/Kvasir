@@ -3,8 +3,11 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 // //ACTIONS - i've included an example, feel free to change
 const updateFeed = createAction('updateFeed');
 const loginAction = createAction('loginAction');
-const updateExplore = createAction('updateExplore');
+const updateInterests = createAction('updateInterests');
+const updateCanTeach = createAction('updateCanTeach');
+const updateCanLearn = createAction('updateCanLearn');
 const updateUserInfo = createAction('updateUserInfo');
+const updateExplore = createAction('updateExplore');
 const updateChats = createAction('updateChats');
 const initialState = {
   userInfo: {

@@ -180,12 +180,42 @@ const Profile = ( {userInfo} ) => {
 
   return ( 
     <div id="profile-page">
-      {!edit ? <button onClick={()=>setEdit(!edit)} className="edit-button">Edit</button> : <></>}
-      {edit ? <button onClick={handleSave}>Save</button> : <></>}
-      {edit ? <button onClick={handleCancel}>Cancel</button> : <></>}
-      <ProfileSection edit={edit} id="section_canLearn" handleAdd={handleAdd} options={languages} current={current} name="I want to learn: " info={edit?add.canLearn:userInfo.canLearn} type='canLearn' handleRemove={handleRemove}/>
-      <ProfileSection edit={edit} id="section_canTeach" handleAdd={handleAdd} options={languages} current={current} name="I can teach: " info={edit?add.canTeach:userInfo.canTeach} type='canTeach' handleRemove={handleRemove}/>
-      <ProfileSection edit={edit} id="section_interests" handleAdd={handleAdd} options={interests} current={current} info={edit?add.interests:userInfo.interests} type='interests' name="I am interested in: " handleRemove={handleRemove}/>
+
+      <ProfileSection 
+        edit={edit} 
+        id="section_canLearn" 
+        handleAdd={handleAdd} 
+        options={options} 
+        current={current} 
+        name="I want to learn: " 
+        info={edit?add.canLearn:userInfo.canLearn} 
+        type='canLearn' 
+        handleRemove={handleRemove}
+      />
+
+      <ProfileSection 
+        edit={edit} 
+        id="section_canTeach" 
+        handleAdd={handleAdd} 
+        options={options} 
+        current={current} 
+        name="I can teach: " 
+        info={edit?add.canTeach:userInfo.canTeach} 
+        type='canTeach' 
+        handleRemove={handleRemove}
+      />
+
+      <ProfileSection 
+        edit={edit} 
+        id="section_interests" 
+        handleAdd={handleAdd} 
+        options={options} 
+        current={current} 
+        info={edit?add.interests:userInfo.interests} 
+        type='interests' name="I am interested in: " 
+        handleRemove={handleRemove}
+      />
+
       <section className="profile-section">
         <p className="profile-title">Basic Info:</p>
         <div className="profile-selections">
@@ -196,17 +226,28 @@ const Profile = ( {userInfo} ) => {
           <input name="displayName" type="text" value={newDisplayName} onChange={e => setNewDisplayName(e.target.value)}/>
           <button type="submit" onClick={handleDisplayName}>Submit</button>
         </div>
-        <div>
+        <div id='pass-change-box'>
           <label>Change Your Password:</label>
-          <label htmlFor="password">Current Password:</label>
-          <input name="password" type="password" onChange={(e) => setPassword(e.target.value)}value={password}/>
-          <label htmlFor="newPassword">New Password:</label>
-          <input name="newPassword" type="password" onChange={(e) => setNewPassword(e.target.value)}value={newPassword}/>
-          <label htmlFor="confirm">Confirm New Password:</label>
-          <input name="confirm" type="password" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}/>
-          <button onClick={handlePassword}>Submit</button>
+          <section className='password-inputs'>
+            <label htmlFor="password">Current Password:</label>
+            <input name="password" type="text" onChange={(e) => setPassword(e.target.value)}value={password}/>
+          </section>
+          <section className='password-inputs'>
+            <label htmlFor="newPassword">New Password:</label>
+            <input name="newPassword" type="text" onChange={(e) => setNewPassword(e.target.value)}value={newPassword}/>
+          </section>
+          <section className='password-inputs'>
+            <label htmlFor="confirm">Confirm New Password:</label>
+            <input name="confirm" type="text" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}/>
+          </section>
+          <button>Submit</button>
         </div>
       </section>
+      {!edit ? <button onClick={()=>setEdit(!edit)} className="edit-button">Edit</button> : <></>}
+
+      {edit ? <button onClick={handleSave}>Save</button> : <></>}
+
+      {edit ? <button onClick={handleCancel}>Cancel</button> : <></>}
     </div>
   )
 };
