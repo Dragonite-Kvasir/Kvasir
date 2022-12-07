@@ -52,8 +52,9 @@ const Feed = () => {
                 email={user.email}
                 lastLogin={user.last_login}
                 imgUrl='https://static.vecteezy.com/system/resources/previews/003/597/339/original/cute-coffee-mug-cartoon-illustration-free-vector.jpg'
-                willTeach={['German']}
-                willLearn={['Cantonese', 'English']}
+                willTeach={[user.canTeach]}
+                willLearn={[user.canLearn]}
+                interests={[user.interests]}
               />
             );
           });
