@@ -140,9 +140,11 @@ userController.updateName = async (req, res, next) => {
   const id = res.locals.userId;
   console.log(id);
   try {
-    const displayNameQuery = `UPDATE users SET display_name = '${displayName}' WHERE _id = '${id}';`;
-    const { rows } = await db.query(displayNameQuery);
-    res.locals.displayName = displayName;
+    if(displayName.length){
+      const displayNameQuery = `UPDATE users SET display_name = '${displayName}' WHERE _id = '${id}';`;
+      const { rows } = await db.query(displayNameQuery);
+      res.locals.displayName = displayName;
+    }
     return next();
   } catch (err) {
     return next({
