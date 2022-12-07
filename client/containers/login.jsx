@@ -5,7 +5,7 @@ import { loginAction } from '../rootReducer.js';
 import { useNavigate } from 'react-router-dom';
 import '../styles/loginSignup.scss';
 import axios from 'axios';
-
+import { updateUserInfo } from '../rootReducer.js';
 const Login = () => {
   const [login, setLogin] = useState(true);
   const dispatch = useDispatch();
@@ -30,6 +30,13 @@ const Login = () => {
         });
         console.log(response.status);
         if (response.status === 200) {
+          dispatch(updateUserInfo({
+            interests: response.data.interests,
+            canLearn: response.data.canLearn,
+            canTeach: response.data.canTeach,
+            displayName: response.data.displayName,
+            email: response.data.email,
+          }))
           navigate('/profile');
         }
       } catch (err) {

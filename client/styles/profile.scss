@@ -18,7 +18,9 @@
   align-items: center;
   justify-content: center;
 }
-
+.false {
+  display: none;
+}
 .profile-selections{
   display: flex;
   flex-direction: row;
