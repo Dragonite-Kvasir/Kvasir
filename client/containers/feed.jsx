@@ -28,23 +28,17 @@ const Feed = () => {
     console.log('delete ' + userId);
   };
   const respondFunction = async (friendId) => {
-    console.log('hi');
+    try {
+      const response = await axios.post(`/partner/reply/${friendID}`, {
+        currUser: currUserId,
+      });
+      console.log(response);
+      // dispatch(updateFriend(friend));
+      // parent.remove();
+    } catch (err) {
+      console.log(err);
+    }
   };
-
-  // const addFriend = async (e, friendID) => {
-  //   const parent = e.target.closest('div.card');
-  //   try {
-  //     const response = await axios.post(`/partner/add/${friendID}`, {
-  //       currUser: currUserId,
-  //     });
-  //     const temp = response.data;
-  //     const friend = Object.assign({}, response.data, { status: 2 });
-  //     dispatch(updateFriend(friend));
-  //     parent.remove();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const getFriends = async (name) => {
     try {

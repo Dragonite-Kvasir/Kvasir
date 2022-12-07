@@ -25,7 +25,7 @@ const Card = ({
   const buttonArray = [];
   if (Array.isArray(button)) {
     button.forEach((button, index) => {
-      console.log(button);
+      console.log(buttonFunction, 543894573894589489);
       buttonArray.push(
         <a
           className='bot-buttons'

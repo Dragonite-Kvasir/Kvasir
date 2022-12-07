@@ -22,7 +22,7 @@ const ChatBox = (props) => {
     console.log('hi');
     db.collection(`${collectionName}`)
       .orderBy('createdAt')
-      .limit(8)
+      .limit(50)
       .onSnapshot((snapshot) => {
         setMessages(snapshot.docs.map((doc) => doc.data()));
       });

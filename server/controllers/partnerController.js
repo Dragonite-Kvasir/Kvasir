@@ -55,6 +55,8 @@ partnerController.add = async (req, res, next) => {
 
 partnerController.reply = async (req, res, next) => {
   try {
+    console.log(req.params);
+    console.log(req.query);
     return next();
   } catch (err) {
     return next({
