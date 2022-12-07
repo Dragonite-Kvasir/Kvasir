@@ -1,8 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getMessaging } from "firebase/messaging";
-import { getAnalytics } from "firebase/analytics";
-import 'firebase/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,6 +18,7 @@ const firebaseApp = firebase.initializeApp({
 
 // Initialize Firebase
 const db = firebaseApp.firestore();
+
 export default db;
-const messaging = getMessaging(firebaseApp);
-const analytics = getAnalytics(firebaseApp);
+// const messaging = getMessaging(firebaseApp);
+// const analytics = getAnalytics(firebaseApp);

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ChatBox from '../components/chatbox.jsx';
+import SendMessage from '../components/SendMessage.jsx';
+import ChatMessage from '../components/ChatMessage'
 import styles from '../styles/chatbox.scss';
 
 const ChatBar = () => {

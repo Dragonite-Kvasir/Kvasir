@@ -1,7 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import db from '../firebase';
+import ChatMessage from './ChatMessage';
+import SendMessage from './SendMessage';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-const ChatBox = ({ img, name }) => {
+
+const ChatBox = (props) => {
   const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const { img, name, friend, user } = props;
+
+  // const collectionName = [friend, user].sort();
+  const collectionName = 'messages';
+
+  useEffect(() => {
+    console.log('hi');
+    db.collection(`${collectionName}`)
+      .orderBy('createdAt', desc)
+      .limit(8)
+      .onSnapshot((snapshot) => {
+        setMessages(snapshot.docs.map((doc) => doc.data()));
+      });
+  }, []);
+
+
   return open ? (
     <div className='chatbox'>
       <div className='chatbox-chat'>
@@ -18,11 +41,21 @@ const ChatBox = ({ img, name }) => {
           </a>
         </div>
         <div className='messages'>
-          <p>hi</p>
+          <ChatMessage 
+            // user={user}
+            // friend={friend}
+            messages={messages}
+          />
         </div>
-        <div className='input-div'>
-          <input placeholder='Type here'></input>
-        </div>
+          <SendMessage collectionName={collectionName} user={user}/>
+        {/* <div className='input-div'>
+          <input 
+            placeholder='Type here' 
+            value={formValue} 
+            onChange={(e) => setFormValue(e.target.value)}>
+
+          </input>
+        </div> */}
       </div>
     </div>
   ) : (

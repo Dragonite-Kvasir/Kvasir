@@ -47,9 +47,7 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(updateCanLearn, (state, action) => {
       state.userInfo.canLearn = action.payload;
     })
-    .addCase(updateExplore, (state, action) => {
-      state.exploreCurrent = action.payload;
-    })
+
     .addCase(updateChats, (state, action) => {
       console.log('chatupdate');
     })
