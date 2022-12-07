@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import '../styles/card.scss';
-<<<<<<< HEAD
-=======
 import { useDispatch, useSelector } from 'react-redux';
 import { addChat } from '../rootReducer';
 
->>>>>>> dev
 const Card = ({
   name,
   imgUrl,
@@ -19,23 +16,18 @@ const Card = ({
   currUser,
   interests
 }) => {
-<<<<<<< HEAD
 
   willTeach?.forEach((e) => {
-=======
   const dispatch = useDispatch();
   willTeach.forEach((e) => {
->>>>>>> dev
     e = <li className='cardLang'>{e}</li>;
   });
   willLearn?.forEach((e) => {
     e = <li className='cardLang'>{e}</li>;
   });
-<<<<<<< HEAD
   interests?.forEach((e) => {
     e = <li className='cardLang'>{e}</li>
   })
-=======
   const buttonArray = [];
   if (Array.isArray(button)) {
     button.forEach((button, index) => {
@@ -52,7 +44,6 @@ const Card = ({
   } else {
     buttonArray.push(<a onClick={(e) => buttonFunction(e, id)}>{button}</a>);
   }
->>>>>>> dev
   return (
     <div className='card'>
       <p className='cardName'>{name}</p>
