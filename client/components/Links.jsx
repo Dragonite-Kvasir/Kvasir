@@ -2,23 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { loginAction } from '../rootReducer';
 import { useDispatch } from 'react-redux';
+import '../styles/nav.scss';
 
 const Links = ({ loggedIn } = props) => {
   const dispatch = useDispatch();
   return (
-    <div className='nav-links'>
+    <div id='links-container'>
       {loggedIn ? (
-        <div>
-          <Link to='/explore'>Explore</Link>
-          <Link to='/'>Home Page</Link>
-          <Link to='/profile'>Profile</Link>
-          <Link to='/login' onClick={() => dispatch(loginAction())}>
+        <div id='all-links'>
+          <Link to='/explore' className='nav-links'>Explore</Link>
+          <Link to='/' className='nav-links'>Feed</Link>
+          <Link to='/profile' className='nav-links'>Profile</Link>
+          <Link to='/login' onClick={() => dispatch(loginAction())} className='nav-links'>
             Log Out
           </Link>
         </div>
       ) : (
-        <div>
-          <Link to='/login'>Login</Link>
+        <div id='login-container'>
+          <Link to='/login' className='nav-links'>Login</Link>
         </div>
       )}
     </div>

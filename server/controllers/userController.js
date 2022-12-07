@@ -67,6 +67,7 @@ userController.login = async(req, res, next) => {
             const user = { id: rows[0]._id };
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SERVER);
             res.cookie('token', accessToken);
+            console.log(res.cookie)
             await db.query(dateQuery);
             res.locals.loggedIn = { accessToken: accessToken };
             res.locals.date = today;
@@ -84,30 +85,140 @@ userController.login = async(req, res, next) => {
       }
 }
 
-userController.create = (req, res, next) => {
-    try {
-        return next();
-      }
-      catch(err) {
-        return next({
-          log: `Error in userController.create: ${err}`,
-          status: 500,
-          message: 'Cannot create a profile right now, sorry!'
-        }); 
-      }
+userController.getId = async (req, res, next) => {
+  const { email } = req.body;
+  try {
+    const userQuery = `SELECT _id FROM users WHERE email='${email}'`;
+    const { rows } = await db.query(userQuery);
+    res.locals.userId = rows[0];
+    return next();
+  }
+  catch(err) {
+    return next({
+      log: `Error in userController.update: ${err}`,
+      status: 500,
+      message: 'Cannot update profile right now, sorry!'
+    }); 
+  }
 }
 
-userController.update = (req, res, next) => {
-    try {
-        return next();
-      }
-      catch(err) {
-        return next({
-          log: `Error in userController.update: ${err}`,
-          status: 500,
-          message: 'Cannot update profile right now, sorry!'
-        }); 
-      }
+userController.updateName = async(req, res, next) => {
+  const { displayName } = req.body;
+  const id = res.locals.userId._id;
+  console.log(id)
+  try {
+    const displayNameQuery = `UPDATE users SET display_name = '${displayName}' WHERE _id = '${id}';`
+    const { rows } = await db.query(displayNameQuery);
+    res.locals.displayName = displayName;
+    return next();
+  }
+  catch(err) {
+    return next({
+      log: `Error in userController.update: ${err}`,
+      status: 500,
+      message: 'Cannot update profile right now, sorry!'
+    }); 
+  }
+}
+
+userController.updateInterest = async (req, res, next) => {
+  const { interests } = req.body;
+  try {
+    // delete current user interests
+    const del = `DELETE FROM user_interests WHERE user_id=${res.locals.userId._id}`;
+    const deleted = await db.query(del);
+    console.log(deleted);
+
+    // get interests
+    let query = `SELECT _id FROM interests WHERE name='`+ interests.join('\' OR name=\'') + '\'';
+    const { rows } = await db.query(query);
+    console.log(rows);
+
+    // add user interests
+    const adding = `INSERT INTO user_interests(user_id, interest_id) VALUES` + rows.map(e => `(${res.locals.userId._id},${e._id})`).join(',');
+    const added = await db.query(adding);
+    console.log(added);
+  
+    return next();
+  }
+  catch(err) {
+    return next({
+      log: `Error in userController.update: ${err}`,
+      status: 500,
+      message: 'Cannot update profile right now, sorry!'
+    }); 
+  }
+}
+
+userController.updateTeach = async (req, res, next) => {
+  const { teach } = req.body;
+  try {
+    // delete current user teach languages
+    const del = `DELETE FROM user_teach_languages WHERE user_id=${res.locals.userId._id}`;
+    const deleted = await db.query(del);
+    console.log(deleted);
+
+    // get languages
+    let query = `SELECT _id FROM languages WHERE name='`+ teach.join('\' OR name=\'') + '\'';
+    const { rows } = await db.query(query);
+    console.log(rows);
+
+    // add user teach languages
+    const adding = `INSERT INTO user_teach_languages(user_id, language_id) VALUES` + rows.map(e => `(${res.locals.userId._id},${e._id})`).join(',');
+    const added = await db.query(adding);
+    console.log(added);
+  
+    return next();
+  }
+  catch(err) {
+    return next({
+      log: `Error in userController.update: ${err}`,
+      status: 500,
+      message: 'Cannot update profile right now, sorry!'
+    }); 
+  }
+}
+
+userController.updateLearn = async (req, res, next) => {
+  const { learn } = req.body;
+  try {
+    // delete current user teach languages
+    const del = `DELETE FROM user_learn_languages WHERE user_id=${res.locals.userId._id}`;
+    const deleted = await db.query(del);
+    console.log(deleted);
+
+    // get languages
+    let query = `SELECT _id FROM languages WHERE name='`+ learn.join('\' OR name=\'') + '\'';
+    const { rows } = await db.query(query);
+    console.log(rows);
+
+    // add user teach languages
+    const adding = `INSERT INTO user_learn_languages(user_id, language_id) VALUES` + rows.map(e => `(${res.locals.userId._id},${e._id})`).join(',');
+    const added = await db.query(adding);
+    console.log(added);
+  
+    return next();
+  }
+  catch(err) {
+    return next({
+      log: `Error in userController.update: ${err}`,
+      status: 500,
+      message: 'Cannot update profile right now, sorry!'
+    }); 
+  }
+}
+
+userController.getUserInfo = (req, res, next) => {
+  try {
+      return next();
+    }
+    catch(err) {
+      return next({
+        log: `Error in userController.feed: ${err}`,
+        status: 500,
+        message: 'Cannot get your feed right now, sorry!'
+      }); 
+    }
 }
 
 userController.feed = (req, res, next) => {

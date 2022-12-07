@@ -1,12 +1,43 @@
 @import './variables.scss';
 
-#nav-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 40px;
-  padding-right: 20px;
-  background-color: $white;
-  padding-bottom: 0;
+#navbar {
+  display: grid;
+  grid-template-columns: 30% auto minmax(30%, 350px);
+  
+  background-color: darken($white, 5);
 }
 
+#left-nav {
+  display: flex;
+}
+
+#nav-title {
+  font-family: $title-font;
+}
+
+#right-nav {
+  grid-column: 3 / 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#links-container {
+  width: 100%;
+}
+
+#login-container {
+ width: 85%;
+ display: flex;
+ justify-content: flex-end;
+}
+
+#all-links {
+  width: 100%;
+  display: flex; 
+  justify-content: space-evenly;
+}
+
+.nav-links {
+  font-family: $body-font;
+}
