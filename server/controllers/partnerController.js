@@ -1,6 +1,5 @@
 require('dotenv').config();
 const db = require('../models/postgres');
-
 const partnerController = {};
 
 partnerController.explore = async (req, res, next) => {
@@ -20,6 +19,27 @@ partnerController.explore = async (req, res, next) => {
         return user;
       }
     });
+    console.log('final', final);
+
+    for(let i = 0; i < final.length; i ++) {
+      try {
+        const teach = `SELECT * FROM user_teach_languages i LEFT OUTER JOIN languages ON i.language_id = languages._id WHERE i.user_id=${final[i]._id}`;
+        const r2 = await db.query(teach);
+        const learn = `SELECT * FROM user_learn_languages i LEFT OUTER JOIN languages ON i.language_id = languages._id WHERE i.user_id=${final[i]._id}`;
+        const r3 = await db.query(learn);
+        final[i].canTeach = r2.rows.map(e => e.name);
+        final[i].canLearn = r3.rows.map(e => e.name);
+      }catch(err){
+        console.log(err.message);
+        return next({
+          log: `Error in partnerController.reply: ${err}`,
+          status: 500,
+          message: 'Cannot reply to a partner request right now, sorry!',
+        });
+      }
+    };
+    console.log(final);
+
     res.locals.explore = final;
     return next();
   } catch (err) {
@@ -83,9 +103,25 @@ partnerController.getAll = async (req, res, next) => {
     const query1 = `SELECT users.*, status FROM user_relationships INNER JOIN users ON user_id_rec=users._id WHERE user_id_sent=${userId}`;
     const results = await db.query(query1);
     const friends = { 1: [], 2: [], 3: [] };
-    results.rows.forEach((user) => {
-      friends[user.status] = friends[user.status].concat(user);
-    });
+    for(let i = 0; i < results.rows.length; i ++) {
+      try {
+        const teach = `SELECT * FROM user_teach_languages i LEFT OUTER JOIN languages ON i.language_id = languages._id WHERE i.user_id=${results.rows[i]._id}`;
+        const r2 = await db.query(teach);
+        const learn = `SELECT * FROM user_learn_languages i LEFT OUTER JOIN languages ON i.language_id = languages._id WHERE i.user_id=${results.rows[i]._id}`;
+        const r3 = await db.query(learn);
+        results.rows[i].canTeach = r2.rows.map(e => e.name);
+        results.rows[i].canLearn = r3.rows.map(e => e.name);
+        friends[results.rows[i].status] = friends[results.rows[i].status].concat(results.rows[i]);
+      }catch(err){
+        console.log(err.message);
+        return next({
+          log: `Error in partnerController.reply: ${err}`,
+          status: 500,
+          message: 'Cannot reply to a partner request right now, sorry!',
+        });
+      }
+    };
+    console.log(friends);
     res.locals.friends = friends;
     return next();
   } catch (err) {
@@ -97,4 +133,24 @@ partnerController.getAll = async (req, res, next) => {
   }
 };
 
+// partnerController.getInfo = async(req, res, next) => {
+//   try {
+//     const { userId } = req.query;
+//     const int = `SELECT * FROM user_interests i LEFT OUTER JOIN interests ON i.interest_id = interests._id WHERE i.user_id=${userId}`;
+//     const r1 = await db.query(int);
+//     const teach = `SELECT * FROM user_teach_languages i LEFT OUTER JOIN languages ON i.language_id = languages._id WHERE i.user_id=${userId}`;
+//     const r2 = await db.query(teach);
+//     const learn = `SELECT * FROM user_learn_languages i LEFT OUTER JOIN languages ON i.language_id = languages._id WHERE i.user_id=${userId}`;
+//     const r3 = await db.query(learn);
+//     res.locals.interests = r1.rows.map(e => e.name);
+//     res.locals.canTeach = r2.rows.map(e => e.name);
+//     res.locals.canLearn = r3.rows.map(e => e.name);
+// } catch (err) {
+//   return next({
+//     log: `Error in partnerController.reply: ${err}`,
+//     status: 500,
+//     message: 'Cannot reply to a partner request right now, sorry!',
+//   });
+// }
+// };
 module.exports = partnerController;

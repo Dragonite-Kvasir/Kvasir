@@ -6,10 +6,10 @@ const updateFeed = createAction('updateFeed');
 const loginAction = createAction('loginAction');
 const updateUserInfo = createAction('updateUserInfo');
 const updateExplore = createAction('updateExplore');
-const updateChats = createAction('updateChats');
+const addChat = createAction('addChat');
 const addFriends = createAction('addCards');
 const updateFriend = createAction('updateFriend');
-
+const removeChat = createAction('removeChat');
 
 const initialState = {
   userInfo: {
@@ -56,11 +56,18 @@ const rootReducer = createReducer(initialState, (builder) =>
         ...action.payload,
       };
     })
-    .addCase(updateChats, (state, action) => {
-      console.log('chatupdate');
+    .addCase(addChat, (state, action) => {
+      if (!state.currentChats.includes(action.payload)) {
+        state.currentChats.push(action.payload);
+      }
+    })
+    .addCase(removeChat, (state, action) => {
+      console.log(action.payload);
+      state.currentChats = state.currentChats.filter(
+        (name) => name !== action.payload
+      );
     })
 );
-
 // //export reducer
 export default rootReducer;
 
@@ -72,4 +79,6 @@ export {
   loginAction,
   updateExplore,
   updateUserInfo,
+  addChat,
+  removeChat,
 };

@@ -54,8 +54,9 @@ const Explore = () => {
               'https://static.vecteezy.com/system/resources/previews/003/597/339/original/cute-coffee-mug-cartoon-illustration-free-vector.jpg'
             }
             name={card.display_name ? card.display_name : 'None'}
-            willTeach={['Japanese']}
-            willLearn={['Russian']}
+            willTeach={card.canTeach}
+            willLearn={card.canLearn}
+            interests={card.interests}
             button='Add Friend'
             buttonFunction={addFriend}
             lastLogin={card.last_login}
