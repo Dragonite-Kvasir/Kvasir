@@ -11,13 +11,14 @@ const Login = () => {
   useEffect(() => {}, []);
   const navigate = useNavigate();
 
-  const loginHandle = async (url) => {
+  const loginHandle = async (url, type) => {
     let email = document.getElementById('email').value;
-    console.log(document.getElementById('email').value);
     let password = document.getElementById('password').value;
     let confirmPass;
-    if (document.getElementById('confirm-pass')) {
+    let route = '/';
+    if (type === 'signup') {
       confirmPass = document.getElementById('confirm-pass').value;
+      route = '/profile';
     }
     if (confirmPass && password !== confirmPass) {
       alert('Passwords do not match!');
@@ -27,12 +28,14 @@ const Login = () => {
           email: email,
           password: password,
         });
-        console.log(response.status);
         if (response.status === 200) {
-          navigate('/profile');
+          const userData = await response.data.user;
+          dispatch(loginAction(userData));
+          navigate(route);
         }
       } catch (err) {
-        console.log(err);
+        console.log('error');
+        alert(err.response.data);
       }
     }
   };
@@ -46,8 +49,7 @@ const Login = () => {
           <input id='password' placeholder='password'></input>
           <button
             onClick={() => {
-              dispatch(loginAction());
-              loginHandle('/user/login');
+              loginHandle('/user/login', 'login');
             }}
           >
             Submit
@@ -62,9 +64,7 @@ const Login = () => {
           <input id='confirm-pass' placeholder='confirm password'></input>
           <button
             onClick={() => {
-              dispatch(loginAction());
-              loginHandle('/user/signup');
-              navigate('/profile');
+              loginHandle('/user/signup', 'signup');
             }}
           >
             Submit

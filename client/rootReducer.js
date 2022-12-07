@@ -1,4 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
+import { current } from '@reduxjs/toolkit';
 
 // //ACTIONS - i've included an example, feel free to change
 const updateFeed = createAction('updateFeed');
@@ -8,16 +9,19 @@ const updateInterests = createAction('updateInterests');
 const updateCanTeach = createAction('updateCanTeach');
 const updateCanLearn = createAction('updateCanLearn');
 const updateChats = createAction('updateChats');
+const addFriends = createAction('addCards');
+const updateFriend = createAction('updateFriend');
 
 const initialState = {
   userInfo: {
+    id: 0,
     displayName: 'hi',
     canTeach: ['Spanish', 'Russian'],
     canLearn: ['Cantonese', 'English'],
     imgUrl: '',
-    friends: [],
     interests: ['Saving Ethans Marriage', 'Running'],
   },
+  currFriends: {},
   currentChats: [],
   loggedIn: false,
   feedCurrent: 'Friends',
@@ -29,10 +33,18 @@ const initialState = {
 
 const rootReducer = createReducer(initialState, (builder) =>
   builder
+    .addCase(addFriends, (state, action) => {
+      state.currFriends = action.payload;
+    })
+    .addCase(updateFriend, (state, action) => {
+      const index = action.payload.status;
+      state.currFriends[index].push(action.payload);
+    })
     .addCase(updateFeed, (state, action) => {
       state.feedCurrent = action.payload;
     })
-    .addCase(loginAction, (state) => {
+    .addCase(loginAction, (state, action) => {
+      state.userInfo = Object.assign({}, state.userInfo, action.payload);
       state.loggedIn ? (state.loggedIn = false) : (state.loggedIn = true);
     })
     .addCase(updateExplore, (state, action) => {
@@ -57,6 +69,8 @@ export default rootReducer;
 
 // export actions
 export {
+  addFriends,
+  updateFriend,
   updateFeed,
   loginAction,
   updateExplore,

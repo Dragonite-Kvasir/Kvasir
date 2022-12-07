@@ -40,11 +40,21 @@ userController.signup = async (req, res, next) => {
     const hashedPass = await bcrypt.hash(password, salt);
     const queryStr = `INSERT INTO users(email, password, last_login) VALUES ($1, $2, $3) RETURNING * ;`;
     const values = [email, hashedPass, today];
-    const { rows } = db.query(queryStr, values);
-
+    db.query(queryStr, values);
+    const loginQuery = `SELECT * FROM users WHERE email = '${email}';`;
+    const { rows } = await db.query(loginQuery);
+    const user = {
+      id: rows[0]._id,
+      displayName: rows[0].display_name,
+      lastLogin: rows[0].last_login,
+      email: rows[0].email,
+    };
+    const accessToken = jwt.sign(user.id, process.env.ACCESS_TOKEN_SERVER);
+    res.cookie('token', accessToken);
+    res.locals.loggedIn = { accessToken: accessToken };
+    res.locals.user = user;
     return next();
   } catch (err) {
-    console.log(req.body);
     return next({
       log: `Error in userController.signup: ${err}`,
       status: 500,
@@ -55,7 +65,6 @@ userController.signup = async (req, res, next) => {
 
 userController.login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log('login');
   const today = new Date().toDateString();
   console.log(today);
   try {
@@ -63,14 +72,19 @@ userController.login = async (req, res, next) => {
     const dateQuery = `UPDATE users SET last_login = '${today}' WHERE email = '${email}';`;
     //add query to insert login date
     const { rows } = await db.query(loginQuery);
-
     if (await bcrypt.compare(password, rows[0].password)) {
-      const user = { id: rows[0]._id };
-      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SERVER);
+      const user = {
+        id: rows[0]._id,
+        displayName: rows[0].display_name,
+        lastLogin: rows[0].last_login,
+        email: rows[0].email,
+      };
+      const accessToken = jwt.sign(user.id, process.env.ACCESS_TOKEN_SERVER);
       res.cookie('token', accessToken);
       await db.query(dateQuery);
       res.locals.loggedIn = { accessToken: accessToken };
       res.locals.date = today;
+      res.locals.user = user;
     } else {
       return next({ status: 403 });
     }
