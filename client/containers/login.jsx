@@ -43,45 +43,53 @@ const Login = () => {
       {login ? (
         //if they want to login
         <div id='login-box'>
-          <h1 className='login-title'>Login</h1>
-          <input id='email' className='input-box' placeholder='email'></input>
-          <input id='password' className='input-box' placeholder='password'></input>
-          <button
-            onClick={() => {
-              dispatch(loginAction());
-              loginHandle('/user/login');
-            }}
-            className='click'
-          >
-            Submit
-          </button>
-          <a onClick={() => setLogin(false)} className='click'>Don't have an account?</a>
+          <div id='login-content'>
+            <h1 className='login-title'>Login</h1>
+            <input id='email' className='input-box' placeholder='email'></input>
+            <input id='password' className='input-box' placeholder='password'></input>
+            <button
+              onClick={() => {
+                dispatch(loginAction());
+                loginHandle('/user/login');
+              }}
+              id='submit-button'
+              className='click'
+            >
+              Submit
+            </button>
+            <a onClick={() => setLogin(false)} id='bottom-text' className='click'>Don't have an account?</a>
+          </div>
         </div>
       ) : (
         //if they want to sign up
         <div id='login-box'>
-          <h1 className='login-title'>Sign Up</h1>
-          <input id='email' className='input-box' placeholder='email'></input>
-          <input id='password' className='input-box' placeholder='password'></input>
-          <input id='confirm-pass' className='input-box' placeholder='confirm password'></input>
-          <button
-            onClick={() => {
-              dispatch(loginAction());
-              loginHandle('/user/signup');
-              navigate('/profile');
-            }}
-            className='click'
-          >
-            Submit
-          </button>
-          <a
-            onClick={() => {
-              setLogin(true);
-            }}
-            className='click'
-          >
-            Already have an account?
-          </a>
+          <div id='signup-content'>
+            <h1 className='login-title'>Sign Up</h1>
+            <input id='email' className='input-box' placeholder='email'></input>
+            <input id='password' className='input-box' placeholder='password'></input>
+            <input id='confirm-pass' className='input-box' placeholder='confirm password'></input>
+            <button
+              onClick={() => {
+                dispatch(loginAction());
+                loginHandle('/user/signup');
+                navigate('/profile');
+              }}
+              id='submit-button'
+              className='click'
+            >
+              Submit
+            </button>
+            <a
+              onClick={() => {
+                setLogin(true);
+              }}
+              id='bottom-text'
+              className='click'
+            >
+              Already have an account?
+            </a>
+          </div>
+          
         </div>
       )}
     </div>
