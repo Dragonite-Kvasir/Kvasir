@@ -4,9 +4,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 const updateFeed = createAction('updateFeed');
 const loginAction = createAction('loginAction');
 const updateExplore = createAction('updateExplore');
-const updateInterests = createAction('updateInterests');
-const updateCanTeach = createAction('updateCanTeach');
-const updateCanLearn = createAction('updateCanLearn');
+const updateUserInfo = createAction('updateUserInfo');
 const updateChats = createAction('updateChats');
 
 const initialState = {
@@ -19,7 +17,7 @@ const initialState = {
     interests: ['Saving Ethans Marriage', 'Running'],
   },
   currentChats: [],
-  loggedIn: false,
+  loggedIn: true,
   feedCurrent: 'Friends',
   exploreCurrent: {
     willTeach: '',
@@ -47,6 +45,9 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(updateCanLearn, (state, action) => {
       state.userInfo.canLearn = action.payload;
     })
+    .addCase(updateExplore, (state, action) => {
+      state.exploreCurrent = action.payload;
+    })
     .addCase(updateChats, (state, action) => {
       console.log('chatupdate');
     })
@@ -63,4 +64,7 @@ export {
   updateInterests,
   updateCanTeach,
   updateCanLearn,
+  updateUserInfo
 };
+
+
