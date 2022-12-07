@@ -16,7 +16,7 @@ const initialState = {
     canLearn: ['Cantonese', 'English'],
     imgUrl: '',
     friends: [],
-    interests: ['Saving Ethans Marriage', 'Running']
+    interests: ['Saving Ethans Marriage', 'Running'],
   },
   currentChats: [],
   loggedIn: false,
@@ -56,5 +56,11 @@ const rootReducer = createReducer(initialState, (builder) =>
 export default rootReducer;
 
 // export actions
-export { updateFeed, loginAction, updateExplore, updateInterests, updateCanTeach, updateCanLearn };
-
+export {
+  updateFeed,
+  loginAction,
+  updateExplore,
+  updateInterests,
+  updateCanTeach,
+  updateCanLearn,
+};

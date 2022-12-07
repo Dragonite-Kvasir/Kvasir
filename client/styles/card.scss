@@ -1,14 +1,14 @@
 @import './variables.scss';
 
-.cardImage{
+.cardImage {
   width: 150px;
   height: auto;
   border-radius: 50%;
 }
 
-.card{
-  width: 300px;
-  height: 300px;
+.card {
+  min-width: 400px;
+  min-height: 500px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin: 30px;
   display: flex;
@@ -17,8 +17,7 @@
   justify-content: center;
 }
 
-.cardLangs{
+.cardLangs {
   display: flex;
   flex-direction: row;
-
 }
