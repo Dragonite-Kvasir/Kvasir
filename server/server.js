@@ -1,9 +1,11 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const PORT = 3000;
 const userRouter = require('./routes/userRouter');
 const partnerRouter = require('./routes/partnerRouter');
+const interestRouter = require('./routes/interestRouter');
+const languageRouter = require('./routes/languageRouter');
 
 // create express ap
 const app = express();
@@ -19,6 +21,8 @@ app.use(express.json());
  */
 app.use('/user', userRouter);
 app.use('/partner', partnerRouter);
+app.use('/interests', interestRouter);
+app.use('/languages', languageRouter);
 
 // console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {

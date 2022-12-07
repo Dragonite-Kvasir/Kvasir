@@ -8,7 +8,6 @@ import axios from 'axios';
 import ChatBar from './chatbar.jsx';
 import Card from '../components/Card.jsx';
 import { useNavigate } from 'react-router-dom';
-import { current } from '@reduxjs/toolkit';
 
 const Feed = () => {
   const navigate = useNavigate();
@@ -87,12 +86,14 @@ const Feed = () => {
   }, [dropCurrent]);
 
   useEffect(() => {
+    console.log(loggedInStatus, 'status');
     if (!loggedInStatus) {
       navigate('/login');
     } else {
       getFriends();
     }
   }, []);
+
   return (
     <div>
       <div>
@@ -101,7 +102,6 @@ const Feed = () => {
           current={dropCurrent}
           handleChange={(name) => {
             dispatch(updateFeed(name));
-            // getFriends(name);
             setDropCurrent(name);
             checkArray;
           }}
