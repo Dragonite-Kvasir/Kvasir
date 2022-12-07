@@ -10,12 +10,20 @@
 #left-nav {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+}
+
+#logo-pic {
+  height: 5vh;
+  margin-right: 7px;
+  align-self: center;
 }
 
 #nav-title {
   font-family: $title-font;
+  font-weight: $title-weight;
   font-size: 2em;
+  margin: 0;
 }
 
 #right-nav {
