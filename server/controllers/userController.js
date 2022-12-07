@@ -161,20 +161,22 @@ userController.updateInterest = async (req, res, next) => {
     const deleted = await db.query(del);
     console.log(deleted);
 
-    // get interests
-    let query =
-      `SELECT _id FROM interests WHERE name='` +
-      interests.join("' OR name='") +
-      "'";
-    const { rows } = await db.query(query);
-    console.log(rows);
+    if(interests.length) {
+      // get interests
+      let query =
+        `SELECT _id FROM interests WHERE name='` +
+        interests.join("' OR name='") +
+        "'";
+      const { rows } = await db.query(query);
+      console.log(rows);
 
-    // add user interests
-    const adding =
-      `INSERT INTO user_interests(user_id, interest_id) VALUES` +
-      rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
-    const added = await db.query(adding);
-    console.log(added);
+      // add user interests
+      const adding =
+        `INSERT INTO user_interests(user_id, interest_id) VALUES` +
+        rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
+      const added = await db.query(adding);
+      console.log(added);
+  }
     return next();
   } catch (err) {
     return next({
@@ -193,21 +195,23 @@ userController.updateTeach = async (req, res, next) => {
     const deleted = await db.query(del);
     console.log(deleted);
 
-    // get languages
-    let query =
-      `SELECT _id FROM languages WHERE name='` +
-      teach.join("' OR name='") +
-      "'";
-    const { rows } = await db.query(query);
-    console.log(rows);
+    if(teach.length){
+      // get languages
+      let query =
+        `SELECT _id FROM languages WHERE name='` +
+        teach.join("' OR name='") +
+        "'";
+      const { rows } = await db.query(query);
+      console.log(rows);
 
-    // add user teach languages
-    const adding =
-      `INSERT INTO user_teach_languages(user_id, language_id) VALUES` +
-      rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
-    const added = await db.query(adding);
-    console.log(added);
+      // add user teach languages
 
+      const adding =
+        `INSERT INTO user_teach_languages(user_id, language_id) VALUES` +
+        rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
+      const added = await db.query(adding);
+      console.log(added);
+    }
     return next();
   } catch (err) {
     return next({
@@ -226,6 +230,7 @@ userController.updateLearn = async (req, res, next) => {
     const deleted = await db.query(del);
     console.log(deleted);
 
+    if(learn.length) {
     // get languages
     let query =
       `SELECT _id FROM languages WHERE name='` +
@@ -240,6 +245,7 @@ userController.updateLearn = async (req, res, next) => {
       rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
     const added = await db.query(adding);
     console.log(added);
+  }
 
     return next();
   } catch (err) {
