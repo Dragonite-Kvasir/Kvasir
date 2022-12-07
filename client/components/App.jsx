@@ -9,7 +9,7 @@ import '../styles/global.scss';
 
 const App = () => {
   return (
-    <div>
+    <div id='full-page-layout'>
       <Nav loggedIn={false}/>
       <Routes>
         <Route path='/login' element={<Login />} />
