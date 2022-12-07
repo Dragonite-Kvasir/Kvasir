@@ -12,13 +12,14 @@ const Login = () => {
   useEffect(() => {}, []);
   const navigate = useNavigate();
 
-  const loginHandle = async (url) => {
+  const loginHandle = async (url, type) => {
     let email = document.getElementById('email').value;
-    console.log(document.getElementById('email').value);
     let password = document.getElementById('password').value;
     let confirmPass;
-    if (document.getElementById('confirm-pass')) {
+    let route = '/';
+    if (type === 'signup') {
       confirmPass = document.getElementById('confirm-pass').value;
+      route = '/profile';
     }
     if (confirmPass && password !== confirmPass) {
       alert('Passwords do not match!');
@@ -28,19 +29,26 @@ const Login = () => {
           email: email,
           password: password,
         });
-        console.log(response.status);
+        console.log(response.data);
         if (response.status === 200) {
-          dispatch(updateUserInfo({
-            interests: response.data.interests,
-            canLearn: response.data.canLearn,
-            canTeach: response.data.canTeach,
-            displayName: response.data.displayName,
-            email: response.data.email,
-          }))
-          navigate('/profile');
+          console.log('HERE');
+          const userData = response;
+          console.log(userData.data);
+          dispatch(
+            loginAction({
+              loggedIn: userData.accessToken,
+            })
+          );
+          dispatch(
+            updateUserInfo({
+              ...userData.data.userInfo,
+            })
+          );
+          navigate(route);
         }
       } catch (err) {
         console.log(err);
+        alert(err);
       }
     }
   };
@@ -53,10 +61,14 @@ const Login = () => {
           <div id='login-content'>
             <h1 className='login-title'>Login</h1>
             <input id='email' className='input-box' placeholder='email'></input>
-            <input id='password' className='input-box' placeholder='password'></input>
+            <input
+              id='password'
+              className='input-box'
+              placeholder='password'
+            ></input>
             <button
               onClick={() => {
-                dispatch(loginAction());
+                // dispatch(loginAction());
                 loginHandle('/user/login');
               }}
               id='submit-button'
@@ -64,7 +76,13 @@ const Login = () => {
             >
               Submit
             </button>
-            <a onClick={() => setLogin(false)} id='bottom-text' className='click'>Don't have an account?</a>
+            <a
+              onClick={() => setLogin(false)}
+              id='bottom-text'
+              className='click'
+            >
+              Don't have an account?
+            </a>
           </div>
         </div>
       ) : (
@@ -73,11 +91,19 @@ const Login = () => {
           <div id='signup-content'>
             <h1 className='login-title'>Sign Up</h1>
             <input id='email' className='input-box' placeholder='email'></input>
-            <input id='password' className='input-box' placeholder='password'></input>
-            <input id='confirm-pass' className='input-box' placeholder='confirm password'></input>
+            <input
+              id='password'
+              className='input-box'
+              placeholder='password'
+            ></input>
+            <input
+              id='confirm-pass'
+              className='input-box'
+              placeholder='confirm password'
+            ></input>
             <button
               onClick={() => {
-                dispatch(loginAction());
+                // dispatch(loginAction());
                 loginHandle('/user/signup');
                 navigate('/profile');
               }}
@@ -96,7 +122,6 @@ const Login = () => {
               Already have an account?
             </a>
           </div>
-          
         </div>
       )}
     </div>
