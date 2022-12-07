@@ -54,14 +54,13 @@ userController.password = async (req, res, next) => {
 
 userController.signup = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password, 'signup');
   const today = new Date().toDateString();
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(password, salt);
     const queryStr = `INSERT INTO users(email, password, last_login) VALUES ($1, $2, $3) RETURNING * ;`;
     const values = [email, hashedPass, today];
-    db.query(queryStr, values);
+    await db.query(queryStr, values);
     const loginQuery = `SELECT * FROM users WHERE email = '${email}';`;
     const { rows } = await db.query(loginQuery);
     const user = {
@@ -140,7 +139,7 @@ userController.updateName = async (req, res, next) => {
   const id = res.locals.userId;
   console.log(id);
   try {
-    if(displayName.length){
+    if (displayName.length) {
       const displayNameQuery = `UPDATE users SET display_name = '${displayName}' WHERE _id = '${id}';`;
       const { rows } = await db.query(displayNameQuery);
       res.locals.displayName = displayName;
@@ -163,7 +162,7 @@ userController.updateInterest = async (req, res, next) => {
     const deleted = await db.query(del);
     console.log(deleted);
 
-    if(interests.length) {
+    if (interests.length) {
       // get interests
       let query =
         `SELECT _id FROM interests WHERE name='` +
@@ -178,7 +177,7 @@ userController.updateInterest = async (req, res, next) => {
         rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
       const added = await db.query(adding);
       console.log(added);
-  }
+    }
     return next();
   } catch (err) {
     return next({
@@ -197,7 +196,7 @@ userController.updateTeach = async (req, res, next) => {
     const deleted = await db.query(del);
     console.log(deleted);
 
-    if(teach.length){
+    if (teach.length) {
       // get languages
       let query =
         `SELECT _id FROM languages WHERE name='` +
@@ -232,22 +231,22 @@ userController.updateLearn = async (req, res, next) => {
     const deleted = await db.query(del);
     console.log(deleted);
 
-    if(learn.length) {
-    // get languages
-    let query =
-      `SELECT _id FROM languages WHERE name='` +
-      learn.join("' OR name='") +
-      "'";
-    const { rows } = await db.query(query);
-    console.log(rows);
+    if (learn.length) {
+      // get languages
+      let query =
+        `SELECT _id FROM languages WHERE name='` +
+        learn.join("' OR name='") +
+        "'";
+      const { rows } = await db.query(query);
+      console.log(rows);
 
-    // add user teach languages
-    const adding =
-      `INSERT INTO user_learn_languages(user_id, language_id) VALUES` +
-      rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
-    const added = await db.query(adding);
-    console.log(added);
-  }
+      // add user teach languages
+      const adding =
+        `INSERT INTO user_learn_languages(user_id, language_id) VALUES` +
+        rows.map((e) => `(${res.locals.userId},${e._id})`).join(',');
+      const added = await db.query(adding);
+      console.log(added);
+    }
 
     return next();
   } catch (err) {
