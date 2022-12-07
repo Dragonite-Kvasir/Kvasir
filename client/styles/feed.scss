@@ -42,3 +42,9 @@
     cursor: pointer;
   }
 }
+
+#card-container {
+  margin: 100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 600px));
+}
