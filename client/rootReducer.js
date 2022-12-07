@@ -6,10 +6,10 @@ const loginAction = createAction('loginAction');
 const updateExplore = createAction('updateExplore');
 const updateUserInfo = createAction('updateUserInfo');
 const updateChats = createAction('updateChats');
-
 const initialState = {
   userInfo: {
     displayName: 'hi',
+    email: '',
     canTeach: ['Spanish', 'Russian'],
     canLearn: ['Cantonese', 'English'],
     imgUrl: '',
@@ -36,17 +36,8 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(updateExplore, (state, action) => {
       state.exploreCurrent = action.payload;
     })
-    .addCase(updateInterests, (state, action) => {
-      state.userInfo.interests = action.payload;
-    })
-    .addCase(updateCanTeach, (state, action) => {
-      state.userInfo.canTeach = action.payload;
-    })
-    .addCase(updateCanLearn, (state, action) => {
-      state.userInfo.canLearn = action.payload;
-    })
-    .addCase(updateExplore, (state, action) => {
-      state.exploreCurrent = action.payload;
+    .addCase(updateUserInfo, (state, action) => {
+      state.userInfo = action.payload;
     })
     .addCase(updateChats, (state, action) => {
       console.log('chatupdate');
@@ -61,9 +52,6 @@ export {
   updateFeed,
   loginAction,
   updateExplore,
-  updateInterests,
-  updateCanTeach,
-  updateCanLearn,
   updateUserInfo
 };
 

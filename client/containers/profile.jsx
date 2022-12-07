@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import '../styles/profile.scss';
 import { updateUserInfo } from '../rootReducer';
 import ProfileSection from '../components/ProfileSection.jsx';
-const options = ['bye', 'happy', 'sad'];
-const current = 'hi';
+import axios from 'axios';
+
+const current = 'Select to Add';
 
 
 const Profile = ( {userInfo} ) => {
@@ -14,6 +15,8 @@ const Profile = ( {userInfo} ) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [newDisplayName, setNewDisplayName] = useState('');
   const [edit, setEdit] = useState(false);
+  const [interests, setInterests] = useState([]);
+  const [languages, setLanguages] = useState([]);
   const [add, setAdd] = useState({
     canTeach: [],
     canLearn: [],
@@ -33,7 +36,6 @@ const Profile = ( {userInfo} ) => {
     })
   }
 
-
   const handleAdd = (e, name, type) => {
     console.log(type);
     if(!add[type].includes(name)){
@@ -47,21 +49,108 @@ const Profile = ( {userInfo} ) => {
     }
   }
   
-  const handleSave = () => {
-    dispatch(updateUserInfo({
-      ...userInfo,
-      interests: add.interests,
-      canTeach: add.canTeach,
-      canLearn: add.canLearn
-    }));
+  const handleSave = async () => {
+    try{
+      const r1 = await axios.patch(`/user/update/interest`, {
+        interests: add.interests,
+        email: userInfo.email
+      });
+      const r2 = await axios.patch(`/user/update/teach`, {
+        teach: add.canTeach,
+        email: userInfo.email
+      });
+      const r3 = await axios.patch(`/user/update/learn`, {
+        learn: add.canLearn,
+        email: userInfo.email
+      });
+      dispatch(updateUserInfo({
+        ...userInfo,
+        interests: add.interests,
+        canTeach: add.canTeach,
+        canLearn: add.canLearn
+      }));
+    } catch(err) {
+      alert('something went wrong');
+    }
     setEdit(false);
   }
 
   const handleCancel = () => {
     setEdit(false);
-    Array.from(document.querySelector('div.deleteMe')).forEach(e => e.remove());
   }
 
+  const handleDisplayName = async () => {
+    try {
+      const r = await axios.patch(`/user/update/name`, {
+        email: userInfo.email,
+        displayName: newDisplayName
+      });
+      dispatch(updateUserInfo({
+        ...userInfo, 
+        displayName: newDisplayName
+      }))
+      setEdit(false);
+    } catch (err) {
+      alert('Something went wrong');
+    }
+  }
+
+  const handlePassword = async () => {
+    if(newPassword !== confirmPassword){
+      alert('password and confirmPassword must match');
+    }else if(password === newPassword){
+      alert('That is your password already');
+    }else {
+      try {
+        const r = await axios.post(`/user/check`, {
+          email: userInfo.email,
+          password: password
+        });
+        console.log(r.status);
+        if(r.status === 200){
+          console.log('in here');
+          try {
+            const r2 = await axios.patch(`/user/update/password`, {
+              email: userInfo.email,
+              password: newPassword
+            });
+            console.log(r2);
+            dispatch(updateUserInfo({
+              ...userInfo, 
+              displayName: newDisplayName
+            }));
+            setPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+          } catch(err) {
+            alert('something went wrong');
+          }
+        } else {
+          alert('Your password was incorrect.');
+        }
+        setEdit(false);
+      } catch (err) {
+        alert('Something went wrong');
+        setEdit(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async() => {
+      try{
+        const interesting = await axios.get(`/interests`);
+        setInterests(interesting.data);
+        const linguistic = await axios.get(`/languages`);
+        setLanguages(linguistic.data);
+      } catch(err) { 
+        setInterests(['Something went wrong']);
+        setLanguages(['Something went wrong']);
+      }
+
+    }
+    fetchData();
+  }, [])
   useEffect(() => {
     setAdd({
       interests: [],
@@ -94,28 +183,28 @@ const Profile = ( {userInfo} ) => {
       {!edit ? <button onClick={()=>setEdit(!edit)} className="edit-button">Edit</button> : <></>}
       {edit ? <button onClick={handleSave}>Save</button> : <></>}
       {edit ? <button onClick={handleCancel}>Cancel</button> : <></>}
-      <ProfileSection edit={edit} id="section_canLearn" handleAdd={handleAdd} options={options} current={current} name="I want to learn: " info={edit?add.canLearn:userInfo.canLearn} type='canLearn' handleRemove={handleRemove}/>
-      <ProfileSection edit={edit} id="section_canTeach" handleAdd={handleAdd} options={options} current={current} name="I can teach: " info={edit?add.canTeach:userInfo.canTeach} type='canTeach' handleRemove={handleRemove}/>
-      <ProfileSection edit={edit} id="section_interests" handleAdd={handleAdd} options={options} current={current} info={edit?add.interests:userInfo.interests} type='interests' name="I am interested in: " handleRemove={handleRemove}/>
+      <ProfileSection edit={edit} id="section_canLearn" handleAdd={handleAdd} options={languages} current={current} name="I want to learn: " info={edit?add.canLearn:userInfo.canLearn} type='canLearn' handleRemove={handleRemove}/>
+      <ProfileSection edit={edit} id="section_canTeach" handleAdd={handleAdd} options={languages} current={current} name="I can teach: " info={edit?add.canTeach:userInfo.canTeach} type='canTeach' handleRemove={handleRemove}/>
+      <ProfileSection edit={edit} id="section_interests" handleAdd={handleAdd} options={interests} current={current} info={edit?add.interests:userInfo.interests} type='interests' name="I am interested in: " handleRemove={handleRemove}/>
       <section className="profile-section">
         <p className="profile-title">Basic Info:</p>
         <div className="profile-selections">
           <p>Display Name: {userInfo.displayName}</p>
         </div>
-        <div className="edit hidden">
+        <div>
           <label htmlFor="displayName">Change Display Name:</label>
           <input name="displayName" type="text" value={newDisplayName} onChange={e => setNewDisplayName(e.target.value)}/>
-          <button type="submit" onClick={e => console.log(newDisplayName)}>Submit</button>
+          <button type="submit" onClick={handleDisplayName}>Submit</button>
         </div>
         <div>
           <label>Change Your Password:</label>
           <label htmlFor="password">Current Password:</label>
-          <input name="password" type="text" onChange={(e) => setPassword(e.target.value)}value={password}/>
+          <input name="password" type="password" onChange={(e) => setPassword(e.target.value)}value={password}/>
           <label htmlFor="newPassword">New Password:</label>
-          <input name="newPassword" type="text" onChange={(e) => setNewPassword(e.target.value)}value={newPassword}/>
+          <input name="newPassword" type="password" onChange={(e) => setNewPassword(e.target.value)}value={newPassword}/>
           <label htmlFor="confirm">Confirm New Password:</label>
-          <input name="confirm" type="text" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}/>
-          <button>Submit</button>
+          <input name="confirm" type="password" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}/>
+          <button onClick={handlePassword}>Submit</button>
         </div>
       </section>
     </div>

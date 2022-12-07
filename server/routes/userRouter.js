@@ -7,11 +7,15 @@ router.post('/signup', userController.checkEmailExists, userController.signup, (
     return res.status(200).json(res.locals.status);
 });
 
-router.post('/login', userController.login, (req, res) => {
+router.post('/login', userController.login, userController.getInfo, (req, res) => {
     return res.status(200).json(res.locals);
 });
 
 router.post('/create', userController.getId, userController.updateName, userController.updateInterest, userController.updateTeach, userController.updateLearn, (req, res) => {
+    return res.send('two thumbs up!');
+});
+
+router.post('/check', userController.login, (req, res) => {
     return res.send('two thumbs up!');
 });
 
@@ -20,6 +24,10 @@ router.patch('/update/name', userController.getId, userController.updateName, (r
 });
 
 router.patch('/update/interest', userController.getId, userController.updateInterest, (req, res) => {
+    return res.send('two thumbs up!');
+});
+
+router.patch('/update/password', userController.password, (req, res) => {
     return res.send('two thumbs up!');
 });
 

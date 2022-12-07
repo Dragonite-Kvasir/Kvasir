@@ -10,7 +10,9 @@ button {
   background-color: $white;
   color: $blue;
 }
-
+.false {
+  display: none;
+}
 .profile-selections{
   display: flex;
   flex-direction: row;
