@@ -14,22 +14,66 @@
 
 #login-box {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     margin-bottom: 50px;
     height: 50%;
+    width: 40%;
+    background-color: rgba($green, 0.2);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+}
+
+#login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 65%;
+    margin-bottom: 20px;
+}
+
+#signup-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 70%;
+    margin-bottom: 20px;
+
 }
 
 .login-title {
     font-family: $title-font;
     color: $brown;
+    font-size: 2.5rem;
 }
 
 .input-box {
-    margin: 6px;
-    border: 1px solid $blue;
-    border-radius: 14px;
+    margin: 0px;
+    box-shadow: rgba($brown, 0.2) 0px 2px 8px 0px;
+    border: none;
+    font-family: $body-font;
+    border-radius: 10px;
     height: 2rem;
     padding: 0 10px;
+}
+
+.input-box:focus {
+    outline: none;
+    box-shadow: rgba($green, 0.8) 0px 2px 8px 0px;
+}
+
+#submit-button {
+    border: none;
+    background-color: $green;
+    color: $white;
+    border-radius: 8px;
+    box-shadow: rgba($brown, 0.25) 0px 50px 100px -20px, rgba($brown, 0.3) 0px 30px 60px -30px, rgba($brown, 0.35) 0px -2px 6px 0px inset;
+    height: 30px;
+    width: 80px;
+}
+
+#bottom-text {
+    margin: 0;
 }

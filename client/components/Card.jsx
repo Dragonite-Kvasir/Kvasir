@@ -1,7 +1,18 @@
 import React from 'react';
 import '../styles/card.scss';
 
-const Card = ({ name, imgUrl, willTeach, willLearn, status }) => {
+const Card = ({
+  name,
+  imgUrl,
+  willTeach,
+  willLearn,
+  status,
+  button,
+  buttonFunction,
+  id,
+  lastLogin,
+  currUser,
+}) => {
   willTeach.forEach((e) => {
     e = <li className='cardLang'>{e}</li>;
   });
@@ -19,6 +30,17 @@ const Card = ({ name, imgUrl, willTeach, willLearn, status }) => {
       <div className='cardLangs'>
         <p className='cardListHeading'>Learning: </p>
         <ul className='cardLanguageList'>{willLearn}</ul>
+      </div>
+      <p className='last-login'>{lastLogin}</p>
+      <div>
+        <a onClick={(e) => buttonFunction(e, id)}>{button}</a>
+        <a
+          onClick={() => {
+            console.log('chat');
+          }}
+        >
+          Chat!
+        </a>
       </div>
     </div>
   );

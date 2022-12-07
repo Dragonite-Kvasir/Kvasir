@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef  } from 'react';
 
 const DropDown = ({ options, current, handleChange, type, fromProfile }) => {
   //react hook to open/close the dropdown
+  console.log(options);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -26,7 +27,7 @@ const DropDown = ({ options, current, handleChange, type, fromProfile }) => {
       </li>
     );
   });
-
+  console.log(optionsArr);
   //function to close menu after selection click
   const handleMenu = (name) => {
     setOpen(false);

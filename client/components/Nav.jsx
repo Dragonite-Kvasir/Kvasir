@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 const Nav = () => {
   console.log('here');
   const loggedInStatus = useSelector((state) => state.loggedIn);
+  console.log(loggedInStatus, 'nav');
   return (
     <div id='navbar'>
       <section id='left-nav'>

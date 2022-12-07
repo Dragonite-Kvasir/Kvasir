@@ -1,16 +1,26 @@
 @import './variables.scss';
 
-button {
-  font-size: 15px;
-  left: 10px;
-  border-radius: 5px;
-  background-color: transparent;
-  border: 2px solid $blue;
-  padding: 5px 15px;
-  background-color: $white;
-  color: $blue;
-}
+// button {
+//   font-size: 15px;
+//   left: 10px;
+//   border-radius: 5px;
+//   background-color: transparent;
+//   border: 2px solid $blue;
+//   padding: 5px 15px;
+//   background-color: $white;
+//   color: $blue;
+// }
 
+#profile-page {
+  height: 93vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.false {
+  display: none;
+}
 .profile-selections{
   display: flex;
   flex-direction: row;
@@ -48,5 +58,10 @@ button {
 .edit-button {
   border-color: $brown;
   color: $brown;
+}
+
+#pass-change-box {
+  display: flex;
+  flex-direction: column;
 }
 
