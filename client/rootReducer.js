@@ -14,7 +14,7 @@ const initialState = {
     canLearn: ['Cantonese', 'English'],
     imgUrl: '',
     friends: [],
-    interests: ['Saving Ethans Marriage', 'Running']
+    interests: ['Saving Ethans Marriage', 'Running'],
   },
   currentChats: [],
   loggedIn: true,
@@ -33,8 +33,17 @@ const rootReducer = createReducer(initialState, (builder) =>
     .addCase(loginAction, (state) => {
       state.loggedIn ? (state.loggedIn = false) : (state.loggedIn = true);
     })
-    .addCase(updateUserInfo, (state, action) => {
-      state.userInfo = action.payload;
+    .addCase(updateExplore, (state, action) => {
+      state.exploreCurrent = action.payload;
+    })
+    .addCase(updateInterests, (state, action) => {
+      state.userInfo.interests = action.payload;
+    })
+    .addCase(updateCanTeach, (state, action) => {
+      state.userInfo.canTeach = action.payload;
+    })
+    .addCase(updateCanLearn, (state, action) => {
+      state.userInfo.canLearn = action.payload;
     })
     .addCase(updateExplore, (state, action) => {
       state.exploreCurrent = action.payload;
@@ -48,5 +57,14 @@ const rootReducer = createReducer(initialState, (builder) =>
 export default rootReducer;
 
 // export actions
-export { updateFeed, loginAction, updateExplore, updateUserInfo };
+export {
+  updateFeed,
+  loginAction,
+  updateExplore,
+  updateInterests,
+  updateCanTeach,
+  updateCanLearn,
+  updateUserInfo
+};
+
 
