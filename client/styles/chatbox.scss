@@ -6,7 +6,7 @@
   flex-direction: row;
   bottom: 0px;
   width: 100%;
-  height: 35%;
+  height: 50px;
   background-color: transparent;
   align-items: flex-end;
   padding-bottom: 20px;
@@ -36,6 +36,7 @@
     vertical-align: middle;
     font-size: 20px;
     margin: 10px;
+    z-index: 1;
   }
   .chatbox {
     width: 400px;
@@ -71,7 +72,6 @@
   border-radius: 10px;
   align-self: flex-end;
   width: 70%;
-
 }
 
 .single-message-friend {
@@ -80,7 +80,6 @@
   border-radius: 10px;
   align-self: flex-start;
   width: 70%;
-
 }
 
 .chatbox-mini {

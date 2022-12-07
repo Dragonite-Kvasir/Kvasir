@@ -4,9 +4,12 @@ import ChatMessage from './ChatMessage.jsx';
 import SendMessage from './SendMessage.jsx';
 import { useEffect } from 'react';
 import { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
+import { removeChat } from '../rootReducer';
 
 const ChatBox = (props) => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   //name represents the friend you are chatting with (from chatBar)
@@ -25,7 +28,6 @@ const ChatBox = (props) => {
       });
   }, []);
 
-
   return open ? (
     <div className='chatbox'>
       <div className='chatbox-chat'>
@@ -34,30 +36,20 @@ const ChatBox = (props) => {
           <a className='chat-btn' onClick={() => setOpen(false)}>
             -
           </a>
-          <a
-            className='chat-btn'
-            onClick={() => console.log('REMOVE FROM CHAT')}
-          >
+          <a className='chat-btn' onClick={() => dispatch(removeChat(name))}>
             X
           </a>
         </div>
         <div className='messages'>
-          <ChatMessage 
-            user={user}
-            name={name}
-            messages={messages}
-          />
+          <ChatMessage user={user} name={name} messages={messages} />
         </div>
-          <SendMessage collectionName={collectionName} user={user} name={name}/>
+        <SendMessage collectionName={collectionName} user={user} name={name} />
       </div>
     </div>
   ) : (
     <div className='chatbox-mini' onClick={() => setOpen(true)}>
       <img className='chat-img' src={img} />
-      <a
-        className='chat-btn-mini'
-        onClick={() => console.log('REMOVE FROM CHAT')}
-      >
+      <a className='chat-btn-mini' onClick={() => dispatch(removeChat(name))}>
         X
       </a>
     </div>

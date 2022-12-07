@@ -24,12 +24,27 @@ const Feed = () => {
   const storeUserCards = { 1: [], 2: [], 3: [] };
   const [storedCards, SetStoredCards] = useState(storeUserCards);
 
-  const deleteFunction = (userId) => {
+  const deleteFunction = (friendId) => {
     console.log('delete ' + userId);
   };
-  const respondFunction = (userId) => {
-    console.log('response');
+  const respondFunction = async (friendId) => {
+    console.log('hi');
   };
+
+  // const addFriend = async (e, friendID) => {
+  //   const parent = e.target.closest('div.card');
+  //   try {
+  //     const response = await axios.post(`/partner/add/${friendID}`, {
+  //       currUser: currUserId,
+  //     });
+  //     const temp = response.data;
+  //     const friend = Object.assign({}, response.data, { status: 2 });
+  //     dispatch(updateFriend(friend));
+  //     parent.remove();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const getFriends = async (name) => {
     try {
@@ -38,16 +53,25 @@ const Feed = () => {
           params: { userId: currUser },
         });
         const users = response.data;
-        console.log(users);
+        let buttons = ['Delete'];
+        let buttonsFunction = [deleteFunction];
         for (let status in users) {
+          console.log(typeof status, 'statuhusfhiuaf');
+          if (status == 2) {
+            buttons.push('Add Friend');
+            buttonsFunction.push(respondFunction);
+          } else {
+            buttons = ['Delete'];
+            buttonsFunction = [deleteFunction];
+          }
           users[status].forEach((user) => {
             storeUserCards[status].push(
               <Card
                 key={user._id}
                 id={user._id}
                 status={status}
-                button='Delete'
-                buttonFunction={deleteFunction}
+                button={buttons}
+                buttonFunction={buttonsFunction}
                 name={user.display_name ? user.display_name : 'None'}
                 email={user.email}
                 lastLogin={user.last_login}
