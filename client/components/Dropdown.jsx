@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef  } from 'react';
+import '../styles/profile.scss';
 
 const DropDown = ({ options, current, handleChange, type, fromProfile }) => {
   //react hook to open/close the dropdown
@@ -39,7 +40,7 @@ const DropDown = ({ options, current, handleChange, type, fromProfile }) => {
 
   return (
     <div id='dropdown'>
-      <button id='dropdown-but' ref={ref} onClick={handleOpen}>
+      <button className='dropdown-button' ref={ref} onClick={handleOpen}>
         {current}
       </button>
       {open ? <ul className='menu'>{optionsArr}</ul> : null}

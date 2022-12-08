@@ -23,8 +23,8 @@ const SendMessage = (props) => {
   };
 
   return (
-    <div>
-      <form className='input-dev' onSubmit={send}>
+    <div className='input-div'>
+      <form className='input-div' onSubmit={send}>
         <input
           className='msg-input'
           value={blank}

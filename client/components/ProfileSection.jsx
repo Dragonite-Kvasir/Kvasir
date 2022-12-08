@@ -12,7 +12,13 @@ const ProfileSection = ({edit, handleAdd, handleRemove, options, current, info, 
             return <ProfileWidget key={`pw_${i}`} edit={edit} handleRemove={handleRemove} type={type} name={e} i={i}/>
         })}
       </div>
-        {edit?<DropDown type={type} handleChange={handleAdd} options={options} current={current} fromProfile={true}/> :<></>}
+        {edit?<DropDown 
+          type={type} 
+          handleChange={handleAdd} 
+          options={options} 
+          current={current} 
+          fromProfile={true}
+        /> :<></>}
     </section>
   )
 }

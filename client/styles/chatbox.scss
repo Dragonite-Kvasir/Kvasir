@@ -5,9 +5,8 @@
   display: flex;
   flex-direction: row;
   bottom: 0px;
-  width: 100%;
-  height: 50px;
-  background-color: transparent;
+  width: 100vw;
+  height: 10vh;
   align-items: flex-end;
   padding-bottom: 20px;
 
@@ -17,6 +16,9 @@
     justify-content: center;
     align-content: center;
     align-items: center;
+    font-family: $title-font;
+    color: $brown;
+    font-size: 2rem;
   }
   .chat-img {
     border-radius: 50%;
@@ -39,28 +41,54 @@
     z-index: 1;
   }
   .chatbox {
-    width: 400px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
+    width: 350px;
     margin: 5px;
     .chatbox-chat {
+      display: grid;
       position: absolute;
-      bottom: 0px;
+      bottom: 0;
+      margin-bottom: 20px;
+      border-radius: 20px;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
       height: 600px;
-      background-color: rgb(191, 212, 201);
-      width: 400px;
+      background-color: white;
+      width: 350px;
     }
     .input-div {
-      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 100%;
       bottom: 0px;
       input {
-        width: 350px;
         height: 20px;
       }
     }
+    .msg-input{
+      background-color: darken($white, 3);
+      border: none;
+      font-family: $body-font;
+      border-radius: 20px;
+      width: 60%;
+      height: 50px;
+      padding: 5px 20px;
+      margin-right: 10px;
+
+    }
+    .msg-btn{
+      background-color: lighten($blue, 20);
+      border: none;
+      color: $white;
+      font-family: $body-font;
+      border-radius: 20px;
+      width: 25%;
+      height: 30px;
+      margin-right: 10px;
+    }
     .messages {
       height: 500px;
+      display: flex;
+      flex-direction: column;
       overflow-y: scroll;
     }
   }
@@ -69,17 +97,20 @@
 .single-message-user {
   background-color: $lightmauve;
   font-family: $body-font;
-  border-radius: 10px;
+  border-radius: 20px;
   align-self: flex-end;
-  width: 70%;
+  width: fit-content;
+  padding: 5px 20px;
+  margin-left: 10px;
 }
 
 .single-message-friend {
-  background-color: darken($white, 5);
+  background-color: lighten($green, 35);
   font-family: $body-font;
-  border-radius: 10px;
-  align-self: flex-start;
-  width: 70%;
+  border-radius: 20px;
+  width: fit-content;
+  padding: 5px 20px;
+  margin-left: 10px;
 }
 
 .chatbox-mini {
