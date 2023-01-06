@@ -225,11 +225,13 @@ const Profile = ( {userInfo} ) => {
         type='interests' name="I am interested in: " 
         handleRemove={handleRemove}
       />
-      {!edit ? <button className='profile-btn' onClick={()=>setEdit(!edit)} id="edit-button">Edit</button> : <></>}
+      {!edit ? <button id="edit-button" className='profile-btn' onClick={()=>setEdit(!edit)}>Edit</button> : <></>}
+      <section>
+        {edit ? <button id="save-button" className='profile-btn' onClick={handleSave}>Save</button> : <></>}
 
-      {edit ? <button className='profile-btn' onClick={handleSave}>Save</button> : <></>}
-
-      {edit ? <button className='profile-btn' onClick={handleCancel}>Cancel</button> : <></>}
+      {edit ? <button id="edit-button" className='profile-btn' onClick={handleCancel}>Cancel</button> : <></>}
+      </section>
+      
       <section className="profile-section">
         
         <div id='change-display-name'>

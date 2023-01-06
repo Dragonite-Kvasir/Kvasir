@@ -19,12 +19,6 @@ const Links = ({ loggedIn } = props) => {
           <Link to='/profile' className='nav-links'>
             Profile
           </Link>
-          <Link to='/login' className='nav-links'>
-            Log Out
-          </Link>
-        </div>
-      ) : (
-        <div id='login-container'>
           <Link
             to='/login'
             className='nav-links'
@@ -32,6 +26,12 @@ const Links = ({ loggedIn } = props) => {
               dispatch(loginAction(false));
             }}
           >
+            Log Out
+          </Link>
+        </div>
+      ) : (
+        <div id='login-container'>
+          <Link to='/login' className='nav-links'>
             Login
           </Link>
         </div>

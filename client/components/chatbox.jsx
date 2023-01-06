@@ -41,9 +41,14 @@ const ChatBox = (props) => {
           </a>
         </div>
         <div className='messages'>
-          <ChatMessage user={user} name={name} messages={messages} />
+          <ChatMessage 
+            user={user}
+            name={name}
+            messages={messages}
+          />
+          <SendMessage collectionName={collectionName} user={user} name={name}/>
         </div>
-        <SendMessage collectionName={collectionName} user={user} name={name} />
+          
       </div>
     </div>
   ) : (
